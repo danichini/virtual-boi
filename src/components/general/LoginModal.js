@@ -3,11 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
-import Button from '@material-ui/core/Button';
-
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
 
 function getModalStyle() {
   const top = 50;
@@ -33,11 +28,14 @@ const styles = theme => ({
 
 class SimpleModal extends React.Component {
   state = {
-    open: false,
+    open: true,
   };
 
   handleOpen = () => {
-    this.setState({ open: true });
+    const { handleOpen } = this.props
+    console.log(handleOpen);
+    
+    this.setState({ open: handleOpen });
   };
 
   handleClose = () => {
@@ -45,16 +43,16 @@ class SimpleModal extends React.Component {
   };
 
   render() {
-    const { classes,  } = this.props;
+    const { classes, open } = this.props;
 
 
     return (
       <div>
-        <Button onClick={this.handleOpen}>Open Modal</Button>
         <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
-          open={this.state.open}
+          open={open}
+          // open={this.state.open}
           onClose={this.handleClose}
         >
           <div style={getModalStyle()} className={classes.paper}>

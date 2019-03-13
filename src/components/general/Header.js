@@ -31,6 +31,7 @@ class Header extends React.Component {
   state = {
     auth: true,
     anchorEl: null,
+    loginModal: false,
   };
 
   handleChange = event => {
@@ -38,16 +39,19 @@ class Header extends React.Component {
   };
 
   handleMenu = event => {
-    this.setState({ anchorEl: event.currentTarget });
+    this.setState({ anchorEl: event.currentTarget});
   };
 
   handleClose = () => {
     this.setState({ anchorEl: null });
   };
 
+  handleModal = () => {
+    this.setState({ loginModal: true });
+  }
   render() {
     const { classes } = this.props;
-    const { auth, anchorEl } = this.state;
+    const { auth, anchorEl, loginModal } = this.state;
     const open = Boolean(anchorEl);
 
     return (
@@ -69,32 +73,15 @@ class Header extends React.Component {
               Photos
             </Typography>
             {auth ? (<div>
-                LogIn
+                <LoginModal open={loginModal}/>
+                Login
                 <IconButton
-                  aria-owns={open ? 'menu-appbar' : undefined}
                   aria-haspopup="true"
-                  onClick={this.handleMenu}
+                  onClick={this.handleModal}
                   color="inherit"
                 >
                   <AccountCircle />
                 </IconButton>
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={anchorEl}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={open}
-                  onClose={this.handleClose}
-                >
-                  <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={this.handleClose}>My account</MenuItem>
-                </Menu>
               </div>) : (
               <div>
                 <IconButton
