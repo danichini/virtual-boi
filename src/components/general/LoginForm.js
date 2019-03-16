@@ -55,6 +55,13 @@ export default withFormik({
             errors.password = 'Password must be at least 8 characters';
         }
 
+
+        if (!values.email) {
+          errors.email = 'Email is required'
+        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(errors.email)) {
+          errors.email = 'correo invalido';
+        }
+
         if (Object.keys(errors).length) {
             throw errors;
         }
