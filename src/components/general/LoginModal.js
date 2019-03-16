@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
-import IconButton from '@material-ui/core/IconButton';
-import Close from '@material-ui/icons/Close';
 import LoginForm from './LoginForm'
 
 function getModalStyle() {
@@ -27,9 +25,9 @@ const styles = theme => ({
     padding: theme.spacing.unit * 4,
     outline: 'none',
   },
-  closeStyle: {
+  formStyle: {
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
   }
 });
 
@@ -49,17 +47,12 @@ class SimpleModal extends React.Component {
           <div style={getModalStyle()} className={classes.paper}>
           <div>
             <div>
-              <Typography variant="h6" id="modal-title">
+              <Typography variant="h6" id="modal-title" className={classes.formStyle}>
                 Login Modal
               </Typography>
             </div>
-            <div className={classes.closeStyle}> 
-              <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={() => closeModal('loginModal')}>
-                  <Close />
-              </IconButton>
-            </div>
           </div>
-            <Typography variant="subtitle1" id="simple-modal-description">
+            <Typography variant="subtitle1" id="simple-modal-description" className={classes.formStyle}>
               <LoginForm />
             </Typography>
           </div>

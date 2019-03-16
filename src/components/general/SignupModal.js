@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
-import IconButton from '@material-ui/core/IconButton';
-import Close from '@material-ui/icons/Close';
 
 function getModalStyle() {
   const top = 50;
@@ -46,10 +44,7 @@ class SimpleModal extends React.Component {
           onClose={() => closeModal('signupModal')}
         >
           <div style={getModalStyle()} className={classes.paper}>
-          <div className={classes.closeStyle}> 
-          <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={() => closeModal('signupModal')}>
-              <Close />
-          </IconButton>
+          <div className={classes.closeStyle}>
           </div>
             <Typography variant="h6" id="modal-title">
               SignupModal
