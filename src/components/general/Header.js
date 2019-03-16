@@ -33,6 +33,7 @@ class Header extends React.Component {
     auth: true,
     anchorEl: null,
     loginModal: false,
+    signupModal: false,
   };
 
   handleChange = event => {
@@ -47,17 +48,17 @@ class Header extends React.Component {
     this.setState({ anchorEl: null });
   };
 
-  handleModalOpen = () => {
-    this.setState({ loginModal: true });
+  handleModalOpen = (value) => {
+    this.setState({ [value]: true });
   }
 
-  handleModalClose = () => {
-    this.setState({ loginModal: false })
+  handleModalClose = (value) => {
+    this.setState({ [value]: false })
   }
 
   render() {
     const { classes } = this.props;
-    const { auth, anchorEl, loginModal } = this.state;
+    const { auth, anchorEl, loginModal, signupModal } = this.state;
     const open = Boolean(anchorEl);
 
     return (
@@ -80,10 +81,10 @@ class Header extends React.Component {
             </Typography>
             {auth ? (<div>
                 <LoginModal openModal={loginModal} closeModal={this.handleModalClose}/>
-                <SignupModal openModal={loginModal} closeModal={this.handleModalClose}/>
+                <SignupModal openModal={signupModal} closeModal={this.handleModalClose}/>
                 <IconButton
                   aria-haspopup="true"
-                  onClick={this.handleModalOpen}
+                  onClick={() => this.handleModalOpen('loginModal')}
                   color="inherit"
                 >
                   Login
@@ -91,7 +92,7 @@ class Header extends React.Component {
                 </IconButton>
                 <IconButton
                   aria-haspopup="true"
-                  onClick={this.handleModalOpen}
+                  onClick={() => this.handleModalOpen('signupModal')}
                   color="inherit"
                 >
                   Signup

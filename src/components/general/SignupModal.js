@@ -43,11 +43,11 @@ class SimpleModal extends React.Component {
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
           open={ openModal }
-          onClose={closeModal}
+          onClose={() => closeModal('signupModal')}
         >
           <div style={getModalStyle()} className={classes.paper}>
           <div className={classes.closeStyle}> 
-          <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={closeModal}>
+          <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={() => closeModal('signupModal')}>
               <Close />
           </IconButton>
           </div>

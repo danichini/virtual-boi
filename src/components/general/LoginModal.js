@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import IconButton from '@material-ui/core/IconButton';
 import Close from '@material-ui/icons/Close';
+import LoginForm from './LoginForm'
 
 function getModalStyle() {
   const top = 50;
@@ -43,19 +44,23 @@ class SimpleModal extends React.Component {
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
           open={ openModal }
-          onClose={closeModal}
+          onClose={() => closeModal('loginModal')}
         >
           <div style={getModalStyle()} className={classes.paper}>
-          <div className={classes.closeStyle}> 
-          <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={closeModal}>
-              <Close />
-          </IconButton>
+          <div>
+            <div>
+              <Typography variant="h6" id="modal-title">
+                Login Modal
+              </Typography>
+            </div>
+            <div className={classes.closeStyle}> 
+              <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={() => closeModal('loginModal')}>
+                  <Close />
+              </IconButton>
+            </div>
           </div>
-            <Typography variant="h6" id="modal-title">
-              Login Modal
-            </Typography>
             <Typography variant="subtitle1" id="simple-modal-description">
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+              <LoginForm />
             </Typography>
           </div>
         </Modal>
