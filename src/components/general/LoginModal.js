@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
+import IconButton from '@material-ui/core/IconButton';
+import Close from '@material-ui/icons/Close';
 
 function getModalStyle() {
   const top = 50;
@@ -24,18 +26,19 @@ const styles = theme => ({
     padding: theme.spacing.unit * 4,
     outline: 'none',
   },
+  closeStyle: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  }
 });
 
 class SimpleModal extends React.Component {
   state = {
-    open: true,
+    open: false,
   };
 
   handleOpen = () => {
-    const { handleOpen } = this.props
-    console.log(handleOpen);
-    
-    this.setState({ open: handleOpen });
+    this.setState({ open: true});
   };
 
   handleClose = () => {
@@ -43,19 +46,22 @@ class SimpleModal extends React.Component {
   };
 
   render() {
-    const { classes, open } = this.props;
-
-
+    const { classes, openModal, closeModal } = this.props;
+    const { open } = this.state
     return (
       <div>
         <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
-          open={open}
-          // open={this.state.open}
-          onClose={this.handleClose}
+          open={ openModal }
+          onClose={closeModal}
         >
           <div style={getModalStyle()} className={classes.paper}>
+          <div className={classes.closeStyle}> 
+          <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={closeModal}>
+              <Close />
+          </IconButton>
+          </div>
             <Typography variant="h6" id="modal-title">
               Text in a modal
             </Typography>

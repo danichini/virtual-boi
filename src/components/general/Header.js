@@ -46,9 +46,14 @@ class Header extends React.Component {
     this.setState({ anchorEl: null });
   };
 
-  handleModal = () => {
+  handleModalOpen = () => {
     this.setState({ loginModal: true });
   }
+
+  handleModalClose = () => {
+    this.setState({ loginModal: false })
+  }
+
   render() {
     const { classes } = this.props;
     const { auth, anchorEl, loginModal } = this.state;
@@ -73,11 +78,11 @@ class Header extends React.Component {
               Photos
             </Typography>
             {auth ? (<div>
-                <LoginModal open={loginModal}/>
+                <LoginModal openModal={loginModal} closeModal={this.handleModalClose}/>
                 Login
                 <IconButton
                   aria-haspopup="true"
-                  onClick={this.handleModal}
+                  onClick={this.handleModalOpen}
                   color="inherit"
                 >
                   <AccountCircle />
