@@ -13,6 +13,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import LoginModal from './LoginModal'
+import SignupModal from './SignupModal'
 
 const styles = {
   root: {
@@ -75,16 +76,25 @@ class Header extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" className={classes.grow}>
-              Photos
+              VirtualBoi
             </Typography>
             {auth ? (<div>
                 <LoginModal openModal={loginModal} closeModal={this.handleModalClose}/>
-                Login
+                <SignupModal openModal={loginModal} closeModal={this.handleModalClose}/>
                 <IconButton
                   aria-haspopup="true"
                   onClick={this.handleModalOpen}
                   color="inherit"
                 >
+                  Login
+                  <AccountCircle />
+                </IconButton>
+                <IconButton
+                  aria-haspopup="true"
+                  onClick={this.handleModalOpen}
+                  color="inherit"
+                >
+                  Signup
                   <AccountCircle />
                 </IconButton>
               </div>) : (

@@ -52,7 +52,7 @@ class SimpleModal extends React.Component {
           </IconButton>
           </div>
             <Typography variant="h6" id="modal-title">
-              Login Modal
+              SignupModal
             </Typography>
             <Typography variant="subtitle1" id="simple-modal-description">
               Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
@@ -69,6 +69,6 @@ SimpleModal.propTypes = {
 };
 
 // We need an intermediary variable for handling the recursive nesting.
-const LoginModal = withStyles(styles)(SimpleModal);
+const SignupModal = withStyles(styles)(SimpleModal);
 
-export default LoginModal;
+export default SignupModal;
