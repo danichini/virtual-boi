@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
+import SignupForm from './SignupForm'
 
 function getModalStyle() {
   const top = 50;
@@ -24,9 +25,9 @@ const styles = theme => ({
     padding: theme.spacing.unit * 4,
     outline: 'none',
   },
-  closeStyle: {
+  formStyle: {
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
   }
 });
 
@@ -44,13 +45,15 @@ class SimpleModal extends React.Component {
           onClose={() => closeModal('signupModal')}
         >
           <div style={getModalStyle()} className={classes.paper}>
-          <div className={classes.closeStyle}>
+          <div>
+            <div>
+              <Typography variant="h6" id="modal-title" className={classes.formStyle}>
+                Signup Modal
+              </Typography>
+            </div>
           </div>
-            <Typography variant="h6" id="modal-title">
-              SignupModal
-            </Typography>
-            <Typography variant="subtitle1" id="simple-modal-description">
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            <Typography variant="subtitle1" id="simple-modal-description" className={classes.formStyle}>
+              <SignupForm />
             </Typography>
           </div>
         </Modal>

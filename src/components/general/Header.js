@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -15,7 +16,7 @@ import Menu from '@material-ui/core/Menu';
 import LoginModal from './LoginModal'
 import SignupModal from './SignupModal'
 
-const styles = {
+const styles = theme =>  ({
   root: {
     flexGrow: 1,
   },
@@ -26,7 +27,13 @@ const styles = {
     marginLeft: -12,
     marginRight: 20,
   },
-};
+  rightIcon: {
+    marginLeft: theme.spacing.unit,
+  },
+  button: {
+    margin: theme.spacing.unit,
+  },
+})
 
 class Header extends React.Component {
   state = {
@@ -80,24 +87,26 @@ class Header extends React.Component {
               VirtualBoi
             </Typography>
             {auth ? (<div>
-                <LoginModal openModal={loginModal} closeModal={this.handleModalClose}/>
-                <SignupModal openModal={signupModal} closeModal={this.handleModalClose}/>
-                <IconButton
-                  aria-haspopup="true"
+              <LoginModal openModal={loginModal} closeModal={this.handleModalClose}/>
+              <SignupModal openModal={signupModal} closeModal={this.handleModalClose}/>
+                <Button 
+                  variant="contained" 
+                  color="secondary" 
+                  className={classes.button}
                   onClick={() => this.handleModalOpen('loginModal')}
-                  color="inherit"
-                >
+                  >
                   Login
-                  <AccountCircle />
-                </IconButton>
-                <IconButton
-                  aria-haspopup="true"
+                  <AccountCircle className={classes.rightIcon}/>
+                </Button>
+                <Button 
+                  variant="contained" 
+                  color="secondary" 
+                  className={classes.button}
                   onClick={() => this.handleModalOpen('signupModal')}
-                  color="inherit"
-                >
+                  >
                   Signup
-                  <AccountCircle />
-                </IconButton>
+                  <AccountCircle className={classes.rightIcon}/>
+                </Button>
               </div>) : (
               <div>
                 <IconButton

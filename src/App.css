@@ -33,11 +33,8 @@
 }
 
 .error {
-  padding: 0.5rem;
-  background-color: rgba(255, 0, 0, 0.5);
-  border: 1px solid red;
-  border-radius: 6px;
-  margin: 0.5rem 0 0 0;
+  font-size: 80%;
+  color: crimson
 }
 
 .row {
@@ -53,9 +50,22 @@
   box-sizing: border-box;
 }
 
+.namefield {
+  width: 40%;
+  border-radius: 6px;
+  border: 1px solid #777;
+  padding: .5rem;
+  box-sizing: border-box;
+}
+
+.nameFlex {
+  flex: display;
+  justify-content: space-around;
+}
+
 .submit {
   padding: 0.5rem 0;
-  background-color: #00a6ff;
+  background-color: rgb(30, 60, 143);
   color: white;
   font-weight: bold;
   font-size: 1rem;
