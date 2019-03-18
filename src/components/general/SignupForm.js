@@ -1,13 +1,12 @@
 import React from 'react';
 import { withFormik, Field, ErrorMessage, Form } from 'formik';
-
+import { database, authentication } from '../../store/Firebase'
 
 function SignupForm(props) {
     const {
         isSubmitting,
         isValid,
     } = props;
-
     
     return (
         <Form>
@@ -106,5 +105,7 @@ export default withFormik({
     handleSubmit(values, formikBag) {
         formikBag.setSubmitting(false);
         console.log(values);
+        authentication.createUserWithEmailAndPassword(values.email, values.password)
+        .then(success => console.log(success))
     },
 })(SignupForm);

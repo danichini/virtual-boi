@@ -63,21 +63,19 @@ class Header extends React.Component {
     this.setState({ [value]: false })
   }
 
+  handleSignout = () => {
+    const {loggedUser} = this.props
+    console.log('signOut', loggedUser);
+    
+  }
   render() {
-    const { classes } = this.props;
-    const { auth, anchorEl, loginModal, signupModal } = this.state;
+    const { classes, loggedUser } = this.props;
+    const { anchorEl, loginModal, signupModal } = this.state;
     const open = Boolean(anchorEl);
-
+    console.log('render', loggedUser);
+    
     return (
       <div className={classes.root}>
-        <FormGroup>
-          <FormControlLabel
-            control={
-              <Switch checked={auth} onChange={this.handleChange} aria-label="LoginSwitch" />
-            }
-            label={auth ? 'Logout' : 'Login'}
-          />
-        </FormGroup>
         <AppBar position="static">
           <Toolbar>
             <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
@@ -86,28 +84,7 @@ class Header extends React.Component {
             <Typography variant="h6" color="inherit" className={classes.grow}>
               VirtualBoi
             </Typography>
-            {auth ? (<div>
-              <LoginModal openModal={loginModal} closeModal={this.handleModalClose}/>
-              <SignupModal openModal={signupModal} closeModal={this.handleModalClose}/>
-                <Button 
-                  variant="contained" 
-                  color="secondary" 
-                  className={classes.button}
-                  onClick={() => this.handleModalOpen('loginModal')}
-                  >
-                  Login
-                  <AccountCircle className={classes.rightIcon}/>
-                </Button>
-                <Button 
-                  variant="contained" 
-                  color="secondary" 
-                  className={classes.button}
-                  onClick={() => this.handleModalOpen('signupModal')}
-                  >
-                  Signup
-                  <AccountCircle className={classes.rightIcon}/>
-                </Button>
-              </div>) : (
+            {loggedUser ? (
               <div>
                 <IconButton
                   aria-owns={open ? 'menu-appbar' : undefined}
@@ -132,10 +109,33 @@ class Header extends React.Component {
                   onClose={this.handleClose}
                 >
                   <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                  <MenuItem onClick={this.handleSignout}>SignOut</MenuItem>
                 </Menu>
               </div>
-            )}
+            ) : (<div>
+              <LoginModal openModal={loginModal} closeModal={this.handleModalClose}/>
+              <SignupModal openModal={signupModal} closeModal={this.handleModalClose}/>
+                <Button 
+                  variant="contained" 
+                  color="secondary" 
+                  className={classes.button}
+                  onClick={() => this.handleModalOpen('loginModal')}
+                  >
+                  Login
+                  <AccountCircle className={classes.rightIcon}/>
+                </Button>
+                <Button 
+                  variant="contained" 
+                  color="secondary" 
+                  className={classes.button}
+                  onClick={() => this.handleModalOpen('signupModal')}
+                  >
+                  Signup
+                  <AccountCircle className={classes.rightIcon}/>
+                </Button>
+              </div>)
+          
+          }
           </Toolbar>
         </AppBar>
       </div>
