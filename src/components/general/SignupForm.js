@@ -8,6 +8,10 @@ function SignupForm(props) {
         isValid,
     } = props;
     
+    console.log(isSubmitting);
+    console.log(isValid);
+    
+    
     return (
         <Form>
             <div className="row">

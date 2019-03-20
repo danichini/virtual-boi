@@ -69,9 +69,11 @@ class Header extends React.Component {
     
   }
   render() {
-    const { classes, loggedUser } = this.props;
     const { anchorEl, loginModal, signupModal } = this.state;
+    const { classes, loggedUser, signout } = this.props;
+
     const open = Boolean(anchorEl);
+
     console.log('render', loggedUser);
     
     return (
@@ -109,7 +111,7 @@ class Header extends React.Component {
                   onClose={this.handleClose}
                 >
                   <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={this.handleSignout}>SignOut</MenuItem>
+                  <MenuItem onClick={signout}>SignOut</MenuItem>
                 </Menu>
               </div>
             ) : (<div>

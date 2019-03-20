@@ -12,6 +12,7 @@ export default class Frontpage extends Component {
     logged: false,
   }
 
+
   componentWillMount() {
     authentication.onAuthStateChanged((user) => {
       if (user) {
@@ -23,16 +24,13 @@ export default class Frontpage extends Component {
     })
   }
 
-  // componentDidMount() {
-  //   authentication.onAuthStateChanged((user) => {
-  //     if (user) {
-  //       console.log('Usuario logged', user)
-  //       this.setState({logged: true})
-  //     } else {
-  //       console.log('no existe sesion', user)
-  //     }
-  //   })
-  // }
+  handleSignout = () => {
+    console.log('done');
+    
+    this.setState({
+      logged: false
+    })
+  }
 
 
   render() {
@@ -41,7 +39,7 @@ export default class Frontpage extends Component {
     
     return (
       <div>
-        <Header loggedUser={logged} />
+        <Header loggedUser={logged} signout={this.handleSignout} />
       </div>
     )
   }
