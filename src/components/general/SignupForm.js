@@ -3,6 +3,7 @@ import { withFormik, Field, ErrorMessage, Form } from 'formik';
 import { database, authentication } from '../../store/Firebase'
 
 function SignupForm(props) {
+
     const {
         isSubmitting,
         isValid,
@@ -10,6 +11,8 @@ function SignupForm(props) {
     
     console.log(isSubmitting);
     console.log(isValid);
+    
+    console.log(props);
     
     
     return (
@@ -57,6 +60,14 @@ function SignupForm(props) {
                     Submit
                 </button>
             </div>
+            <div className="row">
+                registrarse como profesor
+                <Field name="teacher" type="checkbox" className="input" />
+                <ErrorMessage name="teacher">
+                    {message => <div className="error">{message}</div>}
+                </ErrorMessage>
+            </div>
+            
         </Form>
     );
 }
@@ -69,6 +80,7 @@ export default withFormik({
             cpassword: '',
             name: '',
             last: '',
+            teacher: false,
         };
     },
 
@@ -109,7 +121,7 @@ export default withFormik({
     handleSubmit(values, formikBag) {
         formikBag.setSubmitting(false);
         console.log(values);
-        authentication.createUserWithEmailAndPassword(values.email, values.password)
-        .then(success => console.log(success))
+        // authentication.createUserWithEmailAndPassword(values.email, values.password)
+        // .then(success => console.log(success))
     },
 })(SignupForm);

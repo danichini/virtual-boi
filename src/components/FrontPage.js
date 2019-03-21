@@ -25,11 +25,11 @@ export default class Frontpage extends Component {
   }
 
   handleSignout = () => {
-    console.log('done');
-    
-    this.setState({
-      logged: false
-    })
+    authentication.signOut()
+    .then(
+      this.setState({ logged: false })
+    )
+    .catch(error => console.log(error));
   }
 
 
