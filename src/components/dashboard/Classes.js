@@ -185,7 +185,7 @@ function Classes() {
     <Paper style={{ 
       height: 400, 
       display: 'flex',
-      width: 500
+      width: 450,
       
       }}>
       <WrappedVirtualizedTable
