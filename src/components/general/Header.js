@@ -133,7 +133,6 @@ class Header extends React.Component {
                   <AccountCircle className={classes.rightIcon}/>
                 </Button>
               </div>)
-          
           }
           </Toolbar>
         </AppBar>

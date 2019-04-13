@@ -9,12 +9,6 @@ function SignupForm(props) {
         isValid,
     } = props;
     
-    console.log(isSubmitting);
-    console.log(isValid);
-    
-    console.log(props);
-    
-    
     return (
         <Form>
             <div className="row">
@@ -121,7 +115,12 @@ export default withFormik({
     handleSubmit(values, formikBag) {
         formikBag.setSubmitting(false);
         console.log(values);
-        // authentication.createUserWithEmailAndPassword(values.email, values.password)
-        // .then(success => console.log(success))
+        authentication.createUserWithEmailAndPassword(values.email, values.password)
+        .then((success) => 
+        database.ref(`Users/${success.user.uid}`).set({
+            name: `${values.name} ${values.last}`,
+            email: success.user.email,
+            professor: values.teacher,
+        }))
     },
 })(SignupForm);

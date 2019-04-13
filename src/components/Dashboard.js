@@ -8,6 +8,8 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Header from './general/Header';
 import Classes from './dashboard/Classes';
+import Button from '@material-ui/core/Button'
+import ClassModal from './general/ClassModal'
 
 function TabContainer({ children, dir }) {
   return (
@@ -32,14 +34,19 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
     width: '60%'
   },
-  classStyle: {
-    
+  button: {
+    marginTop: 20,
+    width: '100%',
+    height: '20%',
+    fontSize: 20,
+    fontFamily: 'Helvetica',
   }
 });
 
 class FullWidthTabs extends React.Component {
   state = {
     value: 0,
+    classModal: false
   };
 
   handleChange = (event, value) => {
@@ -50,7 +57,20 @@ class FullWidthTabs extends React.Component {
     this.setState({ value: index });
   };
 
+  handleModalClass = () => {
+    
+  }
+
+  handleModalOpen = (value) => {
+    this.setState({ classModal: true });
+  }
+
+  handleModalClose = (value) => {
+    this.setState({ classModal: false })
+  }
+
   render() {
+    const { classModal } = this.state;
     const { classes, theme } = this.props;
 
     return (
@@ -85,6 +105,15 @@ class FullWidthTabs extends React.Component {
         
       <div>
         <Classes />
+          <Button 
+          variant="contained" 
+          color="secondary" 
+          className={classes.button}
+          onClick={this.handleModalOpen}
+          >
+          Crear nueva clase
+        </Button>
+        <ClassModal openModal={classModal} closeModal={this.handleModalClose} />
       </div>
     </div>
     </div>
