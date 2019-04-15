@@ -2,6 +2,8 @@ import React from 'react';
 import { withFormik, Field, ErrorMessage, Form } from 'formik';
 import { database, authentication } from '../../store/Firebase'
 
+const professorID = '1Gu8fzzWzGZY1D9g2nJ27FRPcrN2'
+
 function SignupForm(props) {
 
   const {
@@ -12,6 +14,8 @@ function SignupForm(props) {
       values,
   } = props;
   
+  
+
   return (
       <Form>
           <div className="row">
@@ -32,7 +36,7 @@ function SignupForm(props) {
                 style={{ 
                   display: 'block',
                   width: '100%',
-                  fontSize: 19,
+                  fontSize: 16,
               }}
               >
                 <option value="" label="seleccione el area de educación" />
@@ -45,8 +49,31 @@ function SignupForm(props) {
 
           <div className="row">
               Area Extra:
-              <Field name="className" type="text" className="input" />
-              <ErrorMessage name="className">
+              <Field name="extraArea" type="text" className="input" />
+              <ErrorMessage name="extraArea">
+                  {message => <div className="error">{message}</div>}
+              </ErrorMessage>
+          </div>
+
+          <div className="row">
+              Numero Maximo de estudiantes:
+              <select
+                name="maxStudents"
+                value={values.maxStudents}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                style={{ 
+                  display: 'block',
+                  width: '100%',
+                  fontSize: 16,
+              }}
+              >
+                <option value="" label="seleccione el numero maximo de estudiantes" />
+                <option value="20" label="20" />
+                <option value="30" label="30" />
+                <option value="40" label="40" />
+              </select>
+              <ErrorMessage name="maxStudents">
                   {message => <div className="error">{message}</div>}
               </ErrorMessage>
           </div>
@@ -57,7 +84,7 @@ function SignupForm(props) {
                 name="description"
                 cols="40"
                 rows="5"
-                maxlength="200"
+                maxLength="200"
                 value={values.description}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -91,8 +118,8 @@ export default withFormik({
       return {
           className: '',
           description: '',
-          maxStudents: null,
-          educationArea: null,
+          maxStudents: '',
+          educationArea: '',
           extraArea: ''
       };
   },
@@ -102,7 +129,7 @@ export default withFormik({
 
       if (!values.className) {
           errors.className = 'el nombre es requerido';
-      } else if (values.className < 8) {
+      } else if (values.className.length < 8) {
         errors.className = 'el nombre de la clase es muy corto'
       }
 
@@ -116,7 +143,13 @@ export default withFormik({
 
       if (!values.description) {
         errors.description = 'ingrese la descripcion de la clase'
-      } 
+      } else if (values.description.length < 10) {
+        errors.description = 'la descripcion debe contener mas de 10 caracteres'
+      }
+
+      if (!values.maxStudents) {
+        errors.maxStudents = 'el numero de estudiantes es requerido'
+      }
 
       if (Object.keys(errors).length) {
           throw errors;
@@ -129,10 +162,18 @@ export default withFormik({
       database.ref(`Classes/`).push({
           className: values.className,
           professor: 'Daniel Reverol',
-          professorID: '1Gu8fzzWzGZY1D9g2nJ27FRPcrN2',
+          professorID: professorID,
           description: values.description,
           educationArea: values.educationArea,
           extraArea: values.extraArea,
-      })
+          maxStudents: values.maxStudents,
+      }).then(success => {
+        const key = success.key;
+        database.ref(`class-professor/${professorID}`)
+        .update({[key]: true})
+        .then(response => console.log(response)
+        )
+      }
+      )
   },
 })(SignupForm);
