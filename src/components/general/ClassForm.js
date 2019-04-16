@@ -89,6 +89,7 @@ function SignupForm(props) {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 style={{ 
+                  resize: 'none',
                   display: 'block',
                   width: '100%',
                   fontSize: 14,

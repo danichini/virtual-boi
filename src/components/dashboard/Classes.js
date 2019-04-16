@@ -8,6 +8,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
 import { AutoSizer, Column, SortDirection, Table } from 'react-virtualized';
+import { database } from '../../store/Firebase'
+
+const bigglit = [];
 
 const styles = theme => ({
   table: {
@@ -35,6 +38,31 @@ const styles = theme => ({
 });
 
 class MuiVirtualizedTable extends React.PureComponent {
+
+  constructor () {
+    super()
+    this.state = { biglist: [] }
+  }
+  componentWillMount() {
+    database.ref('class-professor/1Gu8fzzWzGZY1D9g2nJ27FRPcrN2/')
+    .once('value')
+    .then(snapshot =>{
+      snapshot.forEach((childSnapshot) => {
+      const { key } = childSnapshot;
+      database.ref(`Classes/${key}`)
+      .once('value')
+      .then((snapshot) => {
+        const classes = []
+        snapshot.forEach((childSnapshot) => {
+          const publicacion = childSnapshot.val();
+          classes.push(publicacion);
+        })
+          bigglit.push(classes)
+          this.setState({biglist: bigglit})
+      })
+    })})
+  }
+
   getRowClassName = ({ index }) => {
     const { classes, rowClassName, onRowClick } = this.props;
 
@@ -91,6 +119,9 @@ class MuiVirtualizedTable extends React.PureComponent {
 
   render() {
     const { classes, columns, ...tableProps } = this.props;
+    const { biglist } = this.state
+    console.log(biglist);
+    
     return (
       <AutoSizer>
         {({ height, width }) => (
@@ -160,24 +191,20 @@ MuiVirtualizedTable.defaultProps = {
 const WrappedVirtualizedTable = withStyles(styles)(MuiVirtualizedTable);
 
 const data = [
-  ['Frozen yoghurt', 159, 6.0, 24, 4.0],
-  ['Ice cream sandwich', 237, 9.0, 37, 4.3],
-  ['Eclair', 262, 16.0, 24, 6.0],
-  ['Cupcake', 305, 3.7, 67, 4.3],
-  ['Gingerbread', 356, 16.0, 49, 3.9],
+  ['clase de danichini', 'se prendioooooo', 'Ingeniería en Computación', 'React', 40, 'Daniel Reverol','1Gu8fzzWzGZY1D9g2nJ27FRPcrN2'],
 ];
 
 let id = 0;
-function createData(dessert, calories, fat, carbs, protein) {
+function createData(className, description, educationArea, extraArea, maxStudents, professor, professorID) {
   id += 1;
-  return { id, dessert, calories, fat, carbs, protein };
+  return { id, className, description, educationArea, extraArea, maxStudents, professor, professorID };
 }
 
 const rows = [];
 
-for (let i = 0; i < 200; i += 1) {
-  const randomSelection = data[Math.floor(Math.random() * data.length)];
-  rows.push(createData(...randomSelection));
+for (let i = 0; i < data.length; i += 1) {
+  const tablePush = data[i];
+  rows.push(createData(...tablePush));
 }
 
 function Classes() {
@@ -185,7 +212,7 @@ function Classes() {
     <Paper style={{ 
       height: 400, 
       display: 'flex',
-      width: 450,
+      width: 650,
       
       }}>
       <WrappedVirtualizedTable
@@ -196,14 +223,13 @@ function Classes() {
           {
             width: 200,
             flexGrow: 1.0,
-            label: 'Dessert',
-            dataKey: 'dessert',
+            label: 'Nombre Clase',
+            dataKey: 'className',
           },
           {
-            width: 120,
-            label: 'Calories (g)',
-            dataKey: 'calories',
-            numeric: true,
+            width: 130,
+            label: 'Nombre Clase',
+            dataKey: 'educationArea',
           },
           {
             width: 120,
@@ -215,6 +241,18 @@ function Classes() {
             width: 120,
             label: 'Carbs (g)',
             dataKey: 'carbs',
+            numeric: true,
+          },
+          {
+            width: 120,
+            label: 'Protein (g)',
+            dataKey: 'protein',
+            numeric: true,
+          },
+          {
+            width: 120,
+            label: 'Protein (g)',
+            dataKey: 'protein',
             numeric: true,
           },
           {
