@@ -8,9 +8,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
 import { AutoSizer, Column, SortDirection, Table } from 'react-virtualized';
-import { database } from '../../store/Firebase'
-
-const bigglit = [];
 
 const styles = theme => ({
   table: {
@@ -38,30 +35,6 @@ const styles = theme => ({
 });
 
 class MuiVirtualizedTable extends React.PureComponent {
-
-  constructor () {
-    super()
-    this.state = { biglist: [] }
-  }
-  componentWillMount() {
-    database.ref('class-professor/1Gu8fzzWzGZY1D9g2nJ27FRPcrN2/')
-    .once('value')
-    .then(snapshot =>{
-      snapshot.forEach((childSnapshot) => {
-      const { key } = childSnapshot;
-      database.ref(`Classes/${key}`)
-      .once('value')
-      .then((snapshot) => {
-        const classes = []
-        snapshot.forEach((childSnapshot) => {
-          const publicacion = childSnapshot.val();
-          classes.push(publicacion);
-        })
-          bigglit.push(classes)
-          this.setState({biglist: bigglit})
-      })
-    })})
-  }
 
   getRowClassName = ({ index }) => {
     const { classes, rowClassName, onRowClick } = this.props;
@@ -119,9 +92,6 @@ class MuiVirtualizedTable extends React.PureComponent {
 
   render() {
     const { classes, columns, ...tableProps } = this.props;
-    const { biglist } = this.state
-    console.log(biglist);
-    
     return (
       <AutoSizer>
         {({ height, width }) => (
@@ -190,29 +160,32 @@ MuiVirtualizedTable.defaultProps = {
 
 const WrappedVirtualizedTable = withStyles(styles)(MuiVirtualizedTable);
 
-const data = [
-  ['clase de danichini', 'se prendioooooo', 'Ingeniería en Computación', 'React', 40, 'Daniel Reverol','1Gu8fzzWzGZY1D9g2nJ27FRPcrN2'],
-];
 
-let id = 0;
-function createData(className, description, educationArea, extraArea, maxStudents, professor, professorID) {
-  id += 1;
-  return { id, className, description, educationArea, extraArea, maxStudents, professor, professorID };
-}
 
-const rows = [];
+function Classes(props) {
+  
+  const { listClass } = props
 
-for (let i = 0; i < data.length; i += 1) {
-  const tablePush = data[i];
-  rows.push(createData(...tablePush));
-}
+  const data = listClass
+  
+  let id = 0;
+  function createData(className, description, educationArea, extraArea, maxStudents, professor, professorID) {
+    id += 1;
+    return { id, className, description, educationArea, extraArea, maxStudents, professor, professorID };
+  }
+  
+  const rows = [];
+  
+  for (let i = 0; i < data.length; i += 1) {
+    const tablePush = data[i];
+    rows.push(createData(...tablePush));
+  }
 
-function Classes() {
   return (
     <Paper style={{ 
       height: 400, 
       display: 'flex',
-      width: 650,
+      width: 400,
       
       }}>
       <WrappedVirtualizedTable
@@ -221,7 +194,7 @@ function Classes() {
         onRowClick={event => console.log(event)}
         columns={[
           {
-            width: 200,
+            width: 130,
             flexGrow: 1.0,
             label: 'Nombre Clase',
             dataKey: 'className',
@@ -232,33 +205,14 @@ function Classes() {
             dataKey: 'educationArea',
           },
           {
-            width: 120,
-            label: 'Fat (g)',
-            dataKey: 'fat',
-            numeric: true,
+            width: 130,
+            label: 'Profesor',
+            dataKey: 'professor',
           },
           {
             width: 120,
-            label: 'Carbs (g)',
-            dataKey: 'carbs',
-            numeric: true,
-          },
-          {
-            width: 120,
-            label: 'Protein (g)',
-            dataKey: 'protein',
-            numeric: true,
-          },
-          {
-            width: 120,
-            label: 'Protein (g)',
-            dataKey: 'protein',
-            numeric: true,
-          },
-          {
-            width: 120,
-            label: 'Protein (g)',
-            dataKey: 'protein',
+            label: 'Cantidad de Alumnos',
+            dataKey: 'maxStudents',
             numeric: true,
           },
         ]}

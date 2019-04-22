@@ -1,6 +1,6 @@
 import React from 'react';
 import { withFormik, Field, ErrorMessage, Form } from 'formik';
-import { database, authentication } from '../../store/Firebase'
+import { database } from '../../store/Firebase'
 
 const professorID = '1Gu8fzzWzGZY1D9g2nJ27FRPcrN2'
 

@@ -10,6 +10,7 @@ import Header from './general/Header';
 import Classes from './dashboard/Classes';
 import Button from '@material-ui/core/Button'
 import ClassModal from './general/ClassModal'
+import { database } from '../store/Firebase'
 
 function TabContainer({ children, dir }) {
   return (
@@ -43,11 +44,38 @@ const styles = theme => ({
   }
 });
 
+const bigglit = []
+
 class FullWidthTabs extends React.Component {
   state = {
     value: 0,
-    classModal: false
+    classModal: false,
+    biglist: [],
   };
+
+
+  componentWillMount() {
+    database.ref('class-professor/1Gu8fzzWzGZY1D9g2nJ27FRPcrN2/')
+    .once('value')
+    .then(snapshot =>{
+      snapshot.forEach((childSnapshot) => {
+      const { key } = childSnapshot;
+      database.ref(`Classes/${key}`)
+      .once('value')
+      .then((snapshot) => {
+        const classes = []
+        snapshot.forEach((childSnapshot) => {
+          const publicacion = childSnapshot.val();
+          classes.push(publicacion);
+          
+        })
+          bigglit.push(classes)
+          console.log('mount',bigglit);
+          this.setState({biglist: bigglit})
+      })
+    })
+  })
+  }
 
   handleChange = (event, value) => {
     this.setState({ value });
@@ -70,9 +98,10 @@ class FullWidthTabs extends React.Component {
   }
 
   render() {
-    const { classModal } = this.state;
+    const { classModal, biglist } = this.state;
     const { classes, theme } = this.props;
-
+    console.log( 'dashboard list', biglist );
+    
     return (
       <div>
         <Header />
@@ -104,7 +133,7 @@ class FullWidthTabs extends React.Component {
       </div>
         
       <div>
-        <Classes />
+        <Classes listClass={biglist}/>
           <Button 
           variant="contained" 
           color="secondary" 
