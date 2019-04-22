@@ -44,7 +44,7 @@ const styles = theme => ({
   }
 });
 
-const bigglit = []
+let bigglit = []
 
 class FullWidthTabs extends React.Component {
   state = {
@@ -55,6 +55,10 @@ class FullWidthTabs extends React.Component {
 
 
   componentWillMount() {
+    this.handleDatabaseRequest()
+  }
+
+  handleDatabaseRequest = () => {
     database.ref('class-professor/1Gu8fzzWzGZY1D9g2nJ27FRPcrN2/')
     .once('value')
     .then(snapshot =>{
@@ -70,10 +74,10 @@ class FullWidthTabs extends React.Component {
           
         })
           bigglit.push(classes)
-          console.log('mount',bigglit);
           this.setState({biglist: bigglit})
       })
     })
+    bigglit = [];
   })
   }
 
@@ -85,22 +89,19 @@ class FullWidthTabs extends React.Component {
     this.setState({ value: index });
   };
 
-  handleModalClass = () => {
-    
-  }
-
   handleModalOpen = (value) => {
     this.setState({ classModal: true });
   }
 
   handleModalClose = (value) => {
     this.setState({ classModal: false })
+    this.setState({ biglist: [] })
+    this.handleDatabaseRequest()
   }
 
   render() {
     const { classModal, biglist } = this.state;
     const { classes, theme } = this.props;
-    console.log( 'dashboard list', biglist );
     
     return (
       <div>
@@ -142,7 +143,10 @@ class FullWidthTabs extends React.Component {
           >
           Crear nueva clase
         </Button>
-        <ClassModal openModal={classModal} closeModal={this.handleModalClose} />
+        <ClassModal
+          openModal={classModal}
+          closeModal={this.handleModalClose}
+        />
       </div>
     </div>
     </div>

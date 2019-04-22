@@ -53,7 +53,7 @@ class SimpleModal extends React.Component {
             </div>
           </div>
             <Typography variant="subtitle1" id="simple-modal-description" className={classes.formStyle}>
-              <ClassForm />
+              <ClassForm closeModal={closeModal}/>
             </Typography>
           </div>
         </Modal>

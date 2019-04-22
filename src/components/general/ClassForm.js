@@ -12,6 +12,7 @@ function SignupForm(props) {
       handleChange,
       handleBlur,
       values,
+      closeModal
   } = props;
   
   
@@ -105,7 +106,6 @@ function SignupForm(props) {
               <button
                   type="submit"
                   className={`submit ${isSubmitting || !isValid ? 'disabled' : ''}`}
-                  
               >
                   CREAR CLASE
               </button>
@@ -116,7 +116,11 @@ function SignupForm(props) {
 
 export default withFormik({
   mapPropsToValues(props) {
+
+    const { closeModal } = props
+
       return {
+          closeModal,
           className: '',
           description: '',
           maxStudents: '',
@@ -172,9 +176,9 @@ export default withFormik({
         const key = success.key;
         database.ref(`class-professor/${professorID}`)
         .update({[key]: true})
-        .then(response => console.log(response)
+        .then(values.closeModal
         )
       }
-      )
+    )
   },
 })(SignupForm);
