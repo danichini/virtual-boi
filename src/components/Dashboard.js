@@ -10,7 +10,7 @@ import Header from './general/Header';
 import Classes from './dashboard/Classes';
 import Button from '@material-ui/core/Button'
 import ClassModal from './general/ClassModal'
-import { database } from '../store/Firebase'
+import { database, authentication } from '../store/Firebase'
 
 function TabContainer({ children, dir }) {
   return (
@@ -51,6 +51,7 @@ class FullWidthTabs extends React.Component {
     value: 0,
     classModal: false,
     biglist: [],
+    logged: false,
   };
 
 
@@ -59,7 +60,9 @@ class FullWidthTabs extends React.Component {
   }
 
   handleDatabaseRequest = () => {
-    database.ref('class-professor/1Gu8fzzWzGZY1D9g2nJ27FRPcrN2/')
+    const { location } = this.props
+    const { state } = location
+    database.ref(`class-professor/${state.uid}`)
     .once('value')
     .then(snapshot =>{
       snapshot.forEach((childSnapshot) => {
@@ -99,13 +102,25 @@ class FullWidthTabs extends React.Component {
     this.handleDatabaseRequest()
   }
 
+  handleSignout = () => {
+    const { history } = this.props
+    authentication.signOut()
+    .then(
+      history.push('./')
+    )
+    .catch(error => console.log(error));
+  }
+
   render() {
-    const { classModal, biglist } = this.state;
-    const { classes, theme } = this.props;
+    const { classModal, biglist, logged} = this.state;
+    const { classes, theme, location } = this.props;
     
+    console.log(location);
+    
+
     return (
       <div>
-        <Header />
+        <Header loggedUser={true} signout={this.handleSignout}/>
         <h1> Dashboard </h1>
       <div className={classes.container}>
       <div className={classes.root}>

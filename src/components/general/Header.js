@@ -67,11 +67,9 @@ class Header extends React.Component {
   }
   render() {
     const { anchorEl, loginModal, signupModal } = this.state;
-    const { classes, loggedUser, signout } = this.props;
+    const { classes, loggedUser, signout, navigateDashboard } = this.props;
 
     const open = Boolean(anchorEl);
-
-    console.log('render', loggedUser);
     
     return (
       <div className={classes.root}>
@@ -112,7 +110,11 @@ class Header extends React.Component {
                 </Menu>
               </div>
             ) : (<div>
-              <LoginModal openModal={loginModal} closeModal={this.handleModalClose}/>
+              <LoginModal
+                openModal={loginModal}
+                closeModal={this.handleModalClose}
+                navigateDashboard={navigateDashboard}
+              />
               <SignupModal openModal={signupModal} closeModal={this.handleModalClose}/>
                 <Button 
                   variant="contained" 

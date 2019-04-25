@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import Header from './general/Header'
 import { authentication } from '../store/Firebase'
+import { Button } from '@material-ui/core';
+import { withRouter} from 'react-router-dom'
 // import LoginModal from './general/LoginModal';
 
 
 
 
-export default class Frontpage extends Component {
+class Frontpage extends Component {
 
   state = {
     logged: false,
@@ -18,6 +20,7 @@ export default class Frontpage extends Component {
       if (user) {
         console.log('Usuario logged', user)
         this.setState({logged: true})
+        this.handleNavigationDashboard(user)
       } else {
         console.log('no existe sesion', user)
       }
@@ -33,14 +36,30 @@ export default class Frontpage extends Component {
   }
 
 
+  handleNavigationDashboard = (value) => {
+    console.log('NavDash', value);
+    const { uid } = value
+    console.log(uid);
+    
+    const { history } = this.props
+    history.push('./dashboard', { uid })
+  }
+
   render() {
     const { logged } = this.state
-    console.log('renderFront', logged );
     
     return (
       <div>
-        <Header loggedUser={logged} signout={this.handleSignout} />
+        <Header 
+          navigateDashboard={() => this.handleNavigationDashboard()}
+          loggedUser={logged}
+          signout={this.handleSignout}
+        />
+        <Button 
+          onClick={() => this.handleNavigationDashboard()  }>Dashboard</Button>
       </div>
     )
   }
 }
+
+export default withRouter(Frontpage)

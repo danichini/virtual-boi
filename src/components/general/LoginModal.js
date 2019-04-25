@@ -34,7 +34,7 @@ const styles = theme => ({
 class SimpleModal extends React.Component {
 
   render() {
-    const { classes, openModal, closeModal } = this.props;
+    const { classes, openModal, closeModal, navigateDashboard } = this.props;
 
     return (
       <div>
@@ -53,7 +53,7 @@ class SimpleModal extends React.Component {
             </div>
           </div>
             <Typography variant="subtitle1" id="simple-modal-description" className={classes.formStyle}>
-              <LoginForm />
+              <LoginForm navigateDashboard={navigateDashboard} />
             </Typography>
           </div>
         </Modal>

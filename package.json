@@ -9,6 +9,7 @@
     "formik": "^1.5.1",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
+    "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
     "react-swipeable-views": "^0.13.1",
     "react-virtualized": "^9.21.0",

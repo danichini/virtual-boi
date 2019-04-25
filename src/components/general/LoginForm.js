@@ -41,7 +41,12 @@ function LoginForm(props) {
 
 export default withFormik({
     mapPropsToValues(props) {
+
+        const { navigateDashboard } = props
+
+
         return {
+            navigateDashboard,
             email: '',
             password: '',
         };
@@ -72,7 +77,7 @@ export default withFormik({
         formikBag.setSubmitting(false);
         console.log(values);
         authentication.signInWithEmailAndPassword(values.email, values.password)
-        .then(success => console.log(success)
+        .then(success => (console.log('success', success))
         )
     },
 })(LoginForm);
