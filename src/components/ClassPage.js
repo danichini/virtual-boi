@@ -57,6 +57,9 @@ class FullWidthTabs extends React.Component {
 
     const Class = 'clase random'
 
+    console.log(this.props)
+    
+
     return (
       <div>
         <Header />

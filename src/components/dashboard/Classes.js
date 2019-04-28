@@ -160,11 +160,9 @@ MuiVirtualizedTable.defaultProps = {
 
 const WrappedVirtualizedTable = withStyles(styles)(MuiVirtualizedTable);
 
-
-
 function Classes(props) {
   
-  const { listClass } = props
+  const { listClass, navClass } = props
 
   const data = listClass
   
@@ -180,6 +178,7 @@ function Classes(props) {
     const tablePush = data[i];
     rows.push(createData(...tablePush));
   }
+  
 
   return (
     <Paper style={{ 
@@ -191,7 +190,8 @@ function Classes(props) {
       <WrappedVirtualizedTable
         rowCount={rows.length}
         rowGetter={({ index }) => rows[index]}
-        onRowClick={event => console.log(event)}
+        onRowClick={event => navClass(event)
+        }
         columns={[
           {
             width: 130,

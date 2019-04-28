@@ -37,7 +37,6 @@ class Frontpage extends Component {
 
 
   handleNavigationDashboard = (value) => {
-    console.log('NavDash', value);
     const { uid } = value
     console.log(uid);
     

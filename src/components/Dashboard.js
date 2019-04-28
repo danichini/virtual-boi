@@ -111,13 +111,16 @@ class FullWidthTabs extends React.Component {
     .catch(error => console.log(error));
   }
 
-  render() {
-    const { classModal, biglist, logged} = this.state;
-    const { classes, theme, location } = this.props;
-    
-    console.log(location);
-    
+  handleNavigationClassPage = (value) => {
+    const { rowData } = value
+    const { history } = this.props
+    history.push('./classpage', { navValue: rowData })
+  }
 
+  render() {
+    const { classModal, biglist } = this.state;
+    const { classes, theme } = this.props;
+    
     return (
       <div>
         <Header loggedUser={true} signout={this.handleSignout}/>
@@ -149,7 +152,10 @@ class FullWidthTabs extends React.Component {
       </div>
         
       <div>
-        <Classes listClass={biglist}/>
+        <Classes 
+          listClass={biglist}
+          navClass={this.handleNavigationClassPage}
+        />
           <Button 
           variant="contained" 
           color="secondary" 
