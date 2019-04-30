@@ -1,6 +1,6 @@
 import React from 'react';
 import { withFormik, Field, ErrorMessage, Form } from 'formik';
-import { database } from '../../store/Firebase'
+import { database, storage } from '../../store/Firebase'
 
 function ResourcesForm(props) {
 
@@ -11,6 +11,11 @@ function ResourcesForm(props) {
       handleBlur,
       values,
   } = props;
+
+  const handleFile = (value) => {
+    console.log(value[0])
+    values.file = value[0]
+  } 
 
   return (
       <Form>
@@ -46,8 +51,15 @@ function ResourcesForm(props) {
           </div>
 
           <div>
-          <input id="file" name="file" type="file" onChange={(event) => console.log('file', event)
+          <input 
+            id="file"
+            name="file"
+            type="file"
+            onChange={(event) => handleFile(event.target.files)
           } />
+            <ErrorMessage name="file">
+                {message => <div className="error">{message}</div>}
+            </ErrorMessage>
           </div>
 
           <div className="row">
@@ -65,11 +77,13 @@ function ResourcesForm(props) {
 export default withFormik({
   mapPropsToValues(props) {
 
-    const { closeModal } = props
+    const { closeModal, classID } = props
 
       return {
+          classID,
           closeModal,
           fileName: '',
+          file: '',
           description: '',
       };
   },
@@ -89,29 +103,47 @@ export default withFormik({
         errors.description = 'la descripcion debe contener mas de 10 caracteres'
       }
 
+      if (!values.file) {
+        errors.file = 'seleccione archivo a subir'
+      } 
+
+      console.log(values);
+
       if (Object.keys(errors).length) {
           throw errors;
       }
+
+      
   },
 
-  // handleSubmit(values, formikBag) {
-  //     formikBag.setSubmitting(false);
-  //     console.log(values);
-  //     database.ref(`Resources/`).push({
-  //         fileName: values.fileName,
-  //         professor: 'Daniel Reverol',
-  //         professorID: professorID,
-  //         description: values.description,
-  //         educationArea: values.educationArea,
-  //         extraArea: values.extraArea,
-  //         maxStudents: values.maxStudents,
-  //     }).then(success => {
-  //       const key = success.key;
-  //       database.ref(`class-professor/${professorID}`)
-  //       .update({[key]: true})
-  //       .then(values.closeModal
-  //       )
-  //     }
-  //   )
-  // },
+  handleSubmit(values, formikBag) {
+    const uploadRes = storage.ref(`${values.classID}/${values.file.name}`)
+    .put(values.file)
+    uploadRes.on('state_changed',
+    (snapshot) => {
+
+    },
+    (error) => {
+      console.log(error)
+    },
+    () => {
+        storage.ref(values.classID)
+        .child(values.file.name)
+        .getDownloadURL().then(url => 
+          database.ref(`Resources/`).push({
+            fileName: values.fileName,
+            description: values.fileName,
+            url
+          })
+        ).then(success => {
+          const key = success.key
+          console.log('key', key)
+          database.ref(`class-resources/${values.classID}`)
+          .update({[key]: true})
+          .then(values.closeModal
+          )
+        })
+      }
+    )
+  },
 })(ResourcesForm);

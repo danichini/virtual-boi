@@ -54,10 +54,6 @@ class FullWidthTabs extends React.Component {
     resourcesModal: false,
   };
 
-  componentWillMount() {
-    const { location } = this.props
-  }
-
   handleChange = (event, value) => {
     this.setState({ value });
   };
@@ -93,7 +89,11 @@ class FullWidthTabs extends React.Component {
     
     return (
       <div>
-        <Header />
+        <Header
+          loggedUser={true}
+          signout={this.handleSignout}
+          name={state.navValue.professor}
+        />
         <h1> {state.navValue.className} </h1>
       <div className={classes.container}>
         <div className={classes.root}>
@@ -136,6 +136,7 @@ class FullWidthTabs extends React.Component {
         <ResourcesModal
           openModal={resourcesModal}
           closeModal={this.handleModalClose}
+          classID={state.navValue.classID}
         />
       </div>
     </div>

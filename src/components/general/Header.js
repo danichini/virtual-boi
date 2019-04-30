@@ -30,6 +30,9 @@ const styles = theme =>  ({
   button: {
     margin: theme.spacing.unit,
   },
+  fontSize: {
+    fontSize: 26,
+  }
 })
 
 class Header extends React.Component {
@@ -67,7 +70,7 @@ class Header extends React.Component {
   }
   render() {
     const { anchorEl, loginModal, signupModal } = this.state;
-    const { classes, loggedUser, signout, navigateDashboard } = this.props;
+    const { classes, loggedUser, signout, navigateDashboard, name } = this.props;
 
     const open = Boolean(anchorEl);
     
@@ -82,7 +85,8 @@ class Header extends React.Component {
               VirtualBoi
             </Typography>
             {loggedUser ? (
-              <div>
+              <div className={classes.fontSize} >
+                {name}
                 <IconButton
                   aria-owns={open ? 'menu-appbar' : undefined}
                   aria-haspopup="true"

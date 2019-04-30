@@ -170,7 +170,11 @@ export default withFormik({
           extraArea: values.extraArea,
           maxStudents: values.maxStudents,
       }).then(success => {
-        const key = success.key;
+        const key = success.key
+        console.log('key', key)
+        database.ref(`Classes/${key}`).update({
+          classID: key
+        })
         database.ref(`class-professor/${values.professorID}`)
         .update({[key]: true})
         .then(values.closeModal

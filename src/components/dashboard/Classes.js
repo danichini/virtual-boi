@@ -165,11 +165,11 @@ function Classes(props) {
   const { listClass, navClass } = props
 
   const data = listClass
-  
+
   let id = 0;
-  function createData(className, description, educationArea, extraArea, maxStudents, professor, professorID) {
+  function createData(classID, className, description, educationArea, extraArea, maxStudents, professor, professorID) {
     id += 1;
-    return { id, className, description, educationArea, extraArea, maxStudents, professor, professorID };
+    return { id, classID, className, description, educationArea, extraArea, maxStudents, professor, professorID };
   }
   
   const rows = [];
