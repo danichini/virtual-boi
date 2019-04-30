@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
-import ClassForm from './ClassForm'
+import ResourcesForm from './ResourcesForm'
 
 function getModalStyle() {
   const top = 50;
@@ -34,7 +34,7 @@ const styles = theme => ({
 class SimpleModal extends React.Component {
 
   render() {
-    const { classes, openModal, closeModal, professorID, name } = this.props;
+    const { classes, openModal, closeModal } = this.props;
 
     return (
       <div>
@@ -48,16 +48,12 @@ class SimpleModal extends React.Component {
           <div>
             <div>
               <Typography variant="h6" id="modal-title" className={classes.formStyle}>
-                CREAR NUEVA CLASE
+                Signup Modal
               </Typography>
             </div>
           </div>
             <Typography variant="subtitle1" id="simple-modal-description" className={classes.formStyle}>
-              <ClassForm 
-                closeModal={closeModal}
-                professorID={professorID}
-                name={name}
-              />
+              <ResourcesForm />
             </Typography>
           </div>
         </Modal>
@@ -71,6 +67,6 @@ SimpleModal.propTypes = {
 };
 
 // We need an intermediary variable for handling the recursive nesting.
-const ClassModal = withStyles(styles)(SimpleModal);
+const ResoursesModal = withStyles(styles)(SimpleModal);
 
-export default ClassModal;
+export default ResoursesModal;

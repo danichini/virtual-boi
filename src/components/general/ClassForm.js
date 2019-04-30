@@ -2,8 +2,6 @@ import React from 'react';
 import { withFormik, Field, ErrorMessage, Form } from 'formik';
 import { database } from '../../store/Firebase'
 
-const professorID = '1Gu8fzzWzGZY1D9g2nJ27FRPcrN2'
-
 function SignupForm(props) {
 
   const {
@@ -12,10 +10,7 @@ function SignupForm(props) {
       handleChange,
       handleBlur,
       values,
-      closeModal
   } = props;
-  
-  
 
   return (
       <Form>
@@ -117,10 +112,12 @@ function SignupForm(props) {
 export default withFormik({
   mapPropsToValues(props) {
 
-    const { closeModal } = props
+    const { closeModal, professorID, name } = props
 
       return {
           closeModal,
+          professorID,
+          name,
           className: '',
           description: '',
           maxStudents: '',
@@ -166,15 +163,15 @@ export default withFormik({
       console.log(values);
       database.ref(`Classes/`).push({
           className: values.className,
-          professor: 'Daniel Reverol',
-          professorID: professorID,
+          professor: values.name,
+          professorID: values.professorID,
           description: values.description,
           educationArea: values.educationArea,
           extraArea: values.extraArea,
           maxStudents: values.maxStudents,
       }).then(success => {
         const key = success.key;
-        database.ref(`class-professor/${professorID}`)
+        database.ref(`class-professor/${values.professorID}`)
         .update({[key]: true})
         .then(values.closeModal
         )

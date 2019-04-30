@@ -52,11 +52,23 @@ class FullWidthTabs extends React.Component {
     classModal: false,
     biglist: [],
     logged: false,
+    name: ''
   };
 
 
   componentWillMount() {
+    this.getUsername()
     this.handleDatabaseRequest()
+  }
+
+  getUsername() {
+    const { location } = this.props
+    const { state } = location
+    database.ref(`Users/${state.uid}`)
+    .once('value')
+    .then(snapshot => {
+      this.setState({name: snapshot.child('name').val()}) }
+    )
   }
 
   handleDatabaseRequest = () => {
@@ -118,13 +130,19 @@ class FullWidthTabs extends React.Component {
   }
 
   render() {
-    const { classModal, biglist } = this.state;
-    const { classes, theme } = this.props;
+    const { classModal, biglist, name } = this.state;
+    const { classes, theme, location } = this.props;
+    const { state } = location
+    console.log('dashboard', location);
     
     return (
       <div>
-        <Header loggedUser={true} signout={this.handleSignout}/>
-        <h1> Dashboard </h1>
+        <Header 
+          loggedUser={true}
+          signout={this.handleSignout}
+          name={name}
+        />
+        <h1> Bienvenido a tu Dashboard </h1>
       <div className={classes.container}>
       <div className={classes.root}>
         <AppBar position="static" color="default">
@@ -167,6 +185,8 @@ class FullWidthTabs extends React.Component {
         <ClassModal
           openModal={classModal}
           closeModal={this.handleModalClose}
+          professorID={state.uid}
+          name={name}
         />
       </div>
     </div>

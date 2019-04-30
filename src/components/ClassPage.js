@@ -10,6 +10,9 @@ import Header from './general/Header';
 import LiveChat from './general/LiveChat';
 import TeacherDescription from './class/TeacherDescription';
 import Resources from './class/Resources';
+import Button from '@material-ui/core/Button'
+import ResourcesModal from './general/ResourcesModal'
+import { database, authentication } from '../store/Firebase'
 
 function TabContainer({ children, dir }) {
   return (
@@ -35,14 +38,25 @@ const styles = theme => ({
     width: '60%'
   },
   classStyle: {
-    
+  },
+  button: {
+    marginTop: 20,
+    width: '100%',
+    height: '10%',
+    fontSize: 20,
+    fontFamily: 'Helvetica',
   }
 });
 
 class FullWidthTabs extends React.Component {
   state = {
     value: 0,
+    resourcesModal: false,
   };
+
+  componentWillMount() {
+    const { location } = this.props
+  }
 
   handleChange = (event, value) => {
     this.setState({ value });
@@ -52,18 +66,35 @@ class FullWidthTabs extends React.Component {
     this.setState({ value: index });
   };
 
+  handleModalOpen = (value) => {
+    this.setState({ resourcesModal: true });
+  }
+
+  handleModalClose = (value) => {
+    this.setState({ resourcesModal: false })
+  }
+
+  handleSignout = () => {
+    const { history } = this.props
+    authentication.signOut()
+    .then(
+      history.push('./')
+    )
+    .catch(error => console.log(error));
+  }
+
   render() {
-    const { classes, theme } = this.props;
 
-    const Class = 'clase random'
+    const { resourcesModal } = this.state
+    const { classes, theme, location } = this.props;
+    const { state } = location
 
-    console.log(this.props)
+    console.log('location', state);
     
-
     return (
       <div>
         <Header />
-        <h1> {Class} </h1>
+        <h1> {state.navValue.className} </h1>
       <div className={classes.container}>
         <div className={classes.root}>
           <AppBar position="static" color="default">
@@ -93,7 +124,19 @@ class FullWidthTabs extends React.Component {
         </div>
         
       <div>
-        <TeacherDescription />
+        <TeacherDescription  teacherDes={state.navValue} />
+        <Button 
+          variant="contained" 
+          color="secondary" 
+          className={classes.button}
+          onClick={this.handleModalOpen}
+        >
+          Subir Archivo
+        </Button>
+        <ResourcesModal
+          openModal={resourcesModal}
+          closeModal={this.handleModalClose}
+        />
       </div>
     </div>
     </div>
