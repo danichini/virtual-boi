@@ -9,14 +9,19 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import pdf from '../../utils/pdf.jpg'
+import word from '../../utils/word.png'
+import ppoint from '../../utils/ppoint.png'
+import ssheet from '../../utils/ssheet.png'
+import unknown from '../../utils/unknown.png'
 
 const styles = {
   card: {
-    maxWidth: '20%',
+    maxWidth: 200,
     margin: 14
   },
   media: {
     objectFit: 'cover',
+    width: 200
   },
   container: {
     display: 'flex',
@@ -24,35 +29,42 @@ const styles = {
   },
 };
 
-const content = [1,2,3,4,5,6,7,8]
-
-function ImgMediaCard(props) {
-  const { classes } = props;
-  const resources = content.map((number) =>
+function ImgMediaCard (props) {
+  const { classes, biglist } = props;
+  const resources = biglist.map((value) =>
   <Card className={classes.card}>
   <CardActionArea>
     <CardMedia
       component="img"
       alt="Contemplative Reptile"
       className={classes.media}
-      height="20%"
-      image={pdf}
-      title="Contemplative Reptile"
+      height="160"
+      image={
+        (value[2].split('/').pop() === 'jpeg' || value[2].split('/').pop() === 'png') ? value[3]
+        : value[2].split('/').pop() === 'pdf' ? pdf
+        : value[2].split('.').pop() === 'document' ? word
+        : value[2].split('.').pop() === 'presentation' ? ppoint
+        : value[2].split('.').pop() === 'sheet' ? ssheet
+        : unknown
+      }
+      title={value[1]}
     />
     <CardContent>
       <Typography gutterBottom variant="h5" component="h2">
-        Lizard
+        {value[1]}
       </Typography>
       <Typography component="p">
-        Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-        across all continents except Antarctica
+        {value[0]}
       </Typography>
     </CardContent>
   </CardActionArea>
   <CardActions>
-    <Button size="small" color="primary">
-      Descargar
-    </Button>
+    
+    <a href={value[3]} download>
+      <Button size="small" color="primary" >
+        Descargar
+      </Button>
+    </a>
   </CardActions>
   </Card>
   );

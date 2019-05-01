@@ -42,17 +42,50 @@ const styles = theme => ({
   button: {
     marginTop: 20,
     width: '100%',
-    height: '10%',
+    height: '20%',
     fontSize: 20,
     fontFamily: 'Helvetica',
   }
 });
 
+let bigglit = []
+
 class FullWidthTabs extends React.Component {
   state = {
     value: 0,
     resourcesModal: false,
+    biglist: [],
   };
+
+  componentWillMount() {
+    this.handleDatabaseRequest()
+  }
+
+  handleDatabaseRequest = () => {
+    const { location } = this.props
+    const { state } = location
+    console.log('location', state);
+    database.ref(`class-resources/${state.navValue.classID}`)
+    .once('value')
+    .then(snapshot =>{
+      snapshot.forEach((childSnapshot) => {
+      const { key } = childSnapshot;
+      database.ref(`Resources/${key}`)
+      .once('value')
+      .then((snapshot) => {
+        const classes = []
+        snapshot.forEach((childSnapshot) => {
+          const publicacion = childSnapshot.val();
+          classes.push(publicacion);
+          
+        })
+          bigglit.push(classes)
+          this.setState({biglist: bigglit})
+      })
+    })
+    bigglit = [];
+  })
+  }
 
   handleChange = (event, value) => {
     this.setState({ value });
@@ -81,11 +114,11 @@ class FullWidthTabs extends React.Component {
 
   render() {
 
-    const { resourcesModal } = this.state
+    const { resourcesModal, biglist } = this.state
     const { classes, theme, location } = this.props;
     const { state } = location
 
-    console.log('location', state);
+    console.log('location', biglist);
     
     return (
       <div>
@@ -116,7 +149,7 @@ class FullWidthTabs extends React.Component {
             onChangeIndex={this.handleChangeIndex}
             >
             <TabContainer dir={theme.direction}>
-              <Resources />
+              <Resources biglist={biglist} />
             </TabContainer>
             <TabContainer dir={theme.direction}>Item Two</TabContainer>
             <TabContainer dir={theme.direction}>Item Three</TabContainer>

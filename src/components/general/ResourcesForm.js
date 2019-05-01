@@ -132,8 +132,9 @@ export default withFormik({
         .getDownloadURL().then(url => 
           database.ref(`Resources/`).push({
             fileName: values.fileName,
-            description: values.fileName,
-            url
+            description: values.description,
+            url,
+            type: values.file.type
           })
         ).then(success => {
           const key = success.key

@@ -137,7 +137,7 @@ class FullWidthTabs extends React.Component {
     const { classModal, biglist, name } = this.state;
     const { classes, theme, location } = this.props;
     const { state } = location
-    console.log('dashboard', location);
+    console.log('dashboard', biglist);
     
     return (
       <div>
