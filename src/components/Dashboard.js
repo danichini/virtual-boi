@@ -12,6 +12,7 @@ import Button from '@material-ui/core/Button'
 import ClassModal from './general/ClassModal'
 import AllClassesModal from './general/AllClassesModal'
 import { database, authentication } from '../store/Firebase'
+import AllClasses from './dashboard/AllClasses'
 
 function TabContainer({ children, dir }) {
   return (
@@ -49,6 +50,7 @@ const styles = theme => ({
   }
 });
 
+let classlit =[]
 let bigglit = []
 
 class FullWidthTabs extends React.Component {
@@ -56,6 +58,7 @@ class FullWidthTabs extends React.Component {
     value: 0,
     classModal: false,
     biglist: [],
+    classlist: [],
     logged: false,
     name: '',
     professor: false,
@@ -64,7 +67,6 @@ class FullWidthTabs extends React.Component {
 
   componentWillMount() {
     this.getUsername()
-    this.handleDatabaseRequest()
   }
 
   getUsername() {
@@ -77,33 +79,96 @@ class FullWidthTabs extends React.Component {
       {
         name: snapshot.child('name').val(), 
         professor: snapshot.child('professor').val(),
-      }) }
+      })
+      this.handleDatabaseRequest(snapshot.child('professor').val())
+    }
     )
   }
 
-  handleDatabaseRequest = () => {
+  handleDatabaseRequest = (value) => {
+
+
     const { location } = this.props
     const { state } = location
-    database.ref(`class-professor/${state.uid}`)
-    .once('value')
-    .then(snapshot =>{
-      snapshot.forEach((childSnapshot) => {
-      const { key } = childSnapshot;
-      database.ref(`Classes/${key}`)
+
+    if (value) {
+        database.ref(`class-professor/${state.uid}`)
+      .once('value')
+      .then(snapshot =>{
+        snapshot.forEach((childSnapshot) => {
+        const { key } = childSnapshot;
+        database.ref(`Classes/${key}`)
+        .once('value')
+        .then((snapshot) => {
+          const classes = []
+          snapshot.forEach((childSnapshot) => {
+            const publicacion = childSnapshot.val();
+            classes.push(publicacion);
+            
+          })
+            bigglit.push(classes)
+            this.setState({biglist: bigglit})
+        })
+      })
+      bigglit = [];
+    })
+    } else {
+      this.handleAllClassTable()
+      this.handleClassesStudentTable()
+    }
+  }
+
+  handleAllClassTable = () => {
+    
+      database.ref(`Classes`)
       .once('value')
       .then((snapshot) => {
-        const classes = []
-        snapshot.forEach((childSnapshot) => {
-          const publicacion = childSnapshot.val();
-          classes.push(publicacion);
-          
-        })
-          bigglit.push(classes)
-          this.setState({biglist: bigglit})
+        snapshot.forEach(
+          (childSnapshot) => {
+            const { key } = childSnapshot;
+            database.ref(`Classes/${key}`)
+            .once('value')
+            .then((snapshot) => {
+              const classes = []
+              snapshot.forEach((childSnapshot) => {
+                const publicacion = childSnapshot.val();
+                classes.push(publicacion);
+                
+              })
+                classlit.push(classes)
+                this.setState({classlist: classlit})
+            })
+          }
+        )
+        classlit = [];
       })
+  }
+
+  handleClassesStudentTable = () => {
+
+    const { location } = this.props
+    const { state } = location
+
+    database.ref(`class-student/${state.uid}`)
+      .once('value')
+      .then(snapshot =>{
+        snapshot.forEach((childSnapshot) => {
+        const { key } = childSnapshot;
+        database.ref(`Classes/${key}`)
+        .once('value')
+        .then((snapshot) => {
+          const classes = []
+          snapshot.forEach((childSnapshot) => {
+            const publicacion = childSnapshot.val();
+            classes.push(publicacion);
+            
+          })
+            bigglit.push(classes)
+            this.setState({biglist: bigglit})
+        })
+      })
+      bigglit = [];
     })
-    bigglit = [];
-  })
   }
 
   handleChange = (event, value) => {
@@ -133,14 +198,33 @@ class FullWidthTabs extends React.Component {
     .catch(error => console.log(error));
   }
 
+  handleSubscribeToClass = (value) => {
+    const { location } = this.props;
+    const { state } = location
+    const { rowData } = value
+    const key = rowData.classID
+    console.log(state.uid)
+    database.ref(`class-student/${state.uid}`)
+        .update({
+          [key]: true
+        })
+        .then(success => console.log(success)
+        )
+  }
+
   handleNavigationClassPage = (value) => {
     const { rowData } = value
+    const { professor, name } = this.state
     const { history } = this.props
-    history.push('./classpage', { navValue: rowData })
+    history.push('./classpage', { 
+      navValue: rowData,
+      professor,
+      name,
+    })
   }
 
   render() {
-    const { classModal, biglist, name, professor } = this.state;
+    const { classModal, biglist, classlist, name, professor } = this.state;
     const { classes, theme, location } = this.props;
     const { state } = location
     console.log('dashboard', professor);
@@ -163,9 +247,9 @@ class FullWidthTabs extends React.Component {
             textColor="primary"
             variant="fullWidth"
             >
-            <Tab label="Item One" />
-            <Tab label="Item Two" />
-            <Tab label="Item Three" />
+            { professor ? (<Tab label="Item One" />)
+            : (<Tab label="Item Two" />)
+            }
           </Tabs>
         </AppBar>
         <SwipeableViews
@@ -173,15 +257,23 @@ class FullWidthTabs extends React.Component {
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
           >
-          <TabContainer dir={theme.direction}>Item One</TabContainer>
-          <TabContainer dir={theme.direction}>Item Two</TabContainer>
-          <TabContainer dir={theme.direction}>Item Three</TabContainer>
+          {professor ? (<TabContainer dir={theme.direction}>Item Ones</TabContainer>)
+            : <TabContainer dir={theme.direction}>
+            <AllClasses 
+              listClass={classlist}
+              handleSubscribeToClass={this.handleSubscribeToClass}
+            />
+          </TabContainer>
+          }
+          
+          
         </SwipeableViews>
       </div>
       { professor ? (<div>
         <Classes 
           listClass={biglist}
           navClass={this.handleNavigationClassPage}
+          professor={professor}
         />
           <Button 
           variant="contained" 
@@ -201,15 +293,8 @@ class FullWidthTabs extends React.Component {
         <Classes 
           listClass={biglist}
           navClass={this.handleNavigationClassPage}
+          professor={professor}
         />
-          <Button 
-          variant="contained" 
-          color="secondary" 
-          className={classes.button}
-          onClick={this.handleModalOpen}
-          >
-          Inscribirse en una Clase
-        </Button>
         <AllClassesModal
           openModal={classModal}
           closeModal={this.handleModalClose}

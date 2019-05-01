@@ -124,14 +124,14 @@ class FullWidthTabs extends React.Component {
     const { classes, theme, location } = this.props;
     const { state } = location
 
-    console.log('location', biglist);
+    console.log('location', state);
     
     return (
       <div>
         <Header
           loggedUser={true}
           signout={this.handleSignout}
-          name={state.navValue.professor}
+          name={state.name}
         />
         <h1 className={classes.classTitle}> {state.navValue.className} </h1>
       <div className={classes.container}>
@@ -164,7 +164,8 @@ class FullWidthTabs extends React.Component {
         
       <div>
         <TeacherDescription  teacherDes={state.navValue} />
-        <Button 
+        { state.professor ? (
+          <Button 
           variant="contained" 
           color="secondary" 
           className={classes.button}
@@ -172,6 +173,11 @@ class FullWidthTabs extends React.Component {
         >
           Subir Archivo
         </Button>
+        ) : (
+          <div /> 
+        )
+          
+        }
         <ResourcesModal
           openModal={resourcesModal}
           closeModal={this.handleModalClose}

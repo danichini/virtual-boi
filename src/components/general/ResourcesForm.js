@@ -121,7 +121,6 @@ export default withFormik({
     .put(values.file)
     uploadRes.on('state_changed',
     (snapshot) => {
-
     },
     (error) => {
       console.log(error)

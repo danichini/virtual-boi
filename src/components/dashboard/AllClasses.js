@@ -160,9 +160,9 @@ MuiVirtualizedTable.defaultProps = {
 
 const WrappedVirtualizedTable = withStyles(styles)(MuiVirtualizedTable);
 
-function Classes(props) {
+function AllClasses(props) {
   
-  const { listClass, navClass } = props
+  const { listClass, handleSubscribeToClass } = props
 
   const data = listClass
 
@@ -184,33 +184,35 @@ function Classes(props) {
     <Paper style={{ 
       height: 400, 
       display: 'flex',
-      width: 400,
+      width: '100%',
       
       }}>
       <WrappedVirtualizedTable
         rowCount={rows.length}
         rowGetter={({ index }) => rows[index]}
-        onRowClick={event => navClass(event)
+        onRowClick={event => handleSubscribeToClass(event)
         }
         columns={[
           {
-            width: 130,
+            width: 200,
             flexGrow: 1.0,
             label: 'Nombre Clase',
             dataKey: 'className',
           },
           {
-            width: 130,
+            width: 200,
+            flexGrow: 1.0,
             label: 'Catedra',
             dataKey: 'educationArea',
           },
           {
-            width: 130,
+            width: 200,
+            flexGrow: 1.0,
             label: 'Profesor',
             dataKey: 'professor',
           },
           {
-            width: 120,
+            width: 200,
             label: 'Cantidad de Alumnos',
             dataKey: 'maxStudents',
             numeric: true,
@@ -221,4 +223,4 @@ function Classes(props) {
   );
 }
 
-export default Classes;
+export default AllClasses;

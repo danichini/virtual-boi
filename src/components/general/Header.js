@@ -13,6 +13,7 @@ import Menu from '@material-ui/core/Menu';
 import LoginModal from './LoginModal'
 import SignupModal from './SignupModal'
 
+
 const styles = theme =>  ({
   root: {
     flexGrow: 1,
