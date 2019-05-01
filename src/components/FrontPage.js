@@ -54,8 +54,6 @@ class Frontpage extends Component {
           loggedUser={logged}
           signout={this.handleSignout}
         />
-        <Button 
-          onClick={() => this.handleNavigationDashboard()  }>Dashboard</Button>
       </div>
     )
   }

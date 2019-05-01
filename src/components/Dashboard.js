@@ -10,6 +10,7 @@ import Header from './general/Header';
 import Classes from './dashboard/Classes';
 import Button from '@material-ui/core/Button'
 import ClassModal from './general/ClassModal'
+import AllClassesModal from './general/AllClassesModal'
 import { database, authentication } from '../store/Firebase'
 
 function TabContainer({ children, dir }) {
@@ -56,7 +57,8 @@ class FullWidthTabs extends React.Component {
     classModal: false,
     biglist: [],
     logged: false,
-    name: ''
+    name: '',
+    professor: false,
   };
 
 
@@ -71,7 +73,11 @@ class FullWidthTabs extends React.Component {
     database.ref(`Users/${state.uid}`)
     .once('value')
     .then(snapshot => {
-      this.setState({name: snapshot.child('name').val()}) }
+      this.setState(
+      {
+        name: snapshot.child('name').val(), 
+        professor: snapshot.child('professor').val(),
+      }) }
     )
   }
 
@@ -134,10 +140,10 @@ class FullWidthTabs extends React.Component {
   }
 
   render() {
-    const { classModal, biglist, name } = this.state;
+    const { classModal, biglist, name, professor } = this.state;
     const { classes, theme, location } = this.props;
     const { state } = location
-    console.log('dashboard', biglist);
+    console.log('dashboard', professor);
     
     return (
       <div>
@@ -172,8 +178,7 @@ class FullWidthTabs extends React.Component {
           <TabContainer dir={theme.direction}>Item Three</TabContainer>
         </SwipeableViews>
       </div>
-        
-      <div>
+      { professor ? (<div>
         <Classes 
           listClass={biglist}
           navClass={this.handleNavigationClassPage}
@@ -192,7 +197,27 @@ class FullWidthTabs extends React.Component {
           professorID={state.uid}
           name={name}
         />
+      </div>) : <div>
+        <Classes 
+          listClass={biglist}
+          navClass={this.handleNavigationClassPage}
+        />
+          <Button 
+          variant="contained" 
+          color="secondary" 
+          className={classes.button}
+          onClick={this.handleModalOpen}
+          >
+          Inscribirse en una Clase
+        </Button>
+        <AllClassesModal
+          openModal={classModal}
+          closeModal={this.handleModalClose}
+          professorID={state.uid}
+          name={name}
+        />
       </div>
+      }
     </div>
     </div>
     );
