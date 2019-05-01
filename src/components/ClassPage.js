@@ -42,9 +42,13 @@ const styles = theme => ({
   button: {
     marginTop: 20,
     width: '100%',
-    height: '20%',
+    height: 100,
     fontSize: 20,
     fontFamily: 'Helvetica',
+  },
+  classTitle: {
+    display: 'flex',
+    justifyContent: 'space-around',
   }
 });
 
@@ -101,6 +105,8 @@ class FullWidthTabs extends React.Component {
 
   handleModalClose = (value) => {
     this.setState({ resourcesModal: false })
+    this.setState({ biglist: [] })
+    this.handleDatabaseRequest()
   }
 
   handleSignout = () => {
@@ -127,7 +133,7 @@ class FullWidthTabs extends React.Component {
           signout={this.handleSignout}
           name={state.navValue.professor}
         />
-        <h1> {state.navValue.className} </h1>
+        <h1 className={classes.classTitle}> {state.navValue.className} </h1>
       <div className={classes.container}>
         <div className={classes.root}>
           <AppBar position="static" color="default">

@@ -17,8 +17,6 @@ import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-import TeacherAvatar from '../../utils/DaIBm0s__400x400.jpg'
-
 const styles = theme => ({
   card: {
     maxWidth: 400,
@@ -44,6 +42,11 @@ const styles = theme => ({
   avatar: {
     backgroundColor: red[500],
   },
+  centerDescription: {
+    display: 'flex',
+    fontSize: 20,
+    marginLeft: 8,
+  }
 });
 
 class RecipeReviewCard extends React.Component {
@@ -81,7 +84,7 @@ class RecipeReviewCard extends React.Component {
           </Typography>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
-        <Typography component="p">
+        <Typography component="p" className={classes.centerDescription}>
           Descripcion:
         </Typography>
           <IconButton

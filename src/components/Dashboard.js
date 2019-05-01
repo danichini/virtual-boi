@@ -42,7 +42,7 @@ const styles = theme => ({
     fontSize: 20,
     fontFamily: 'Helvetica',
   },
-  dashboardTittle: {
+  dashboardTitle: {
     display: 'flex',
     justifyContent: 'space-around',
   }
@@ -146,7 +146,7 @@ class FullWidthTabs extends React.Component {
           signout={this.handleSignout}
           name={name}
         />
-        <h1 className={ classes.dashboardTittle }> Bienvenido a tu Dashboard </h1>
+        <h1 className={ classes.dashboardTitle }> Bienvenido a tu Dashboard </h1>
       <div className={classes.container}>
       <div className={classes.root}>
         <AppBar position="static" color="default">
