@@ -57,6 +57,9 @@ class FullWidthTabs extends React.Component {
   state = {
     value: 0,
     classModal: false,
+    nameClassModal: '',
+    classID: '',
+    AllclassModal: false,
     biglist: [],
     classlist: [],
     logged: false,
@@ -183,9 +186,21 @@ class FullWidthTabs extends React.Component {
     this.setState({ classModal: true });
   }
 
+  handleModalAllOpen = (value) => {
+    const { rowData } = value
+    console.log(rowData);
+    this.setState({ 
+      AllclassModal: true,
+      nameClassModal: rowData.className,
+      classID: rowData.classID,
+    });
+  }
+
   handleModalClose = (value) => {
     this.setState({ classModal: false })
+    this.setState({ AllclassModal: false })
     this.setState({ biglist: [] })
+    this.setState({ classlist: [] })
     this.handleDatabaseRequest()
   }
 
@@ -201,14 +216,11 @@ class FullWidthTabs extends React.Component {
   handleSubscribeToClass = (value) => {
     const { location } = this.props;
     const { state } = location
-    const { rowData } = value
-    const key = rowData.classID
-    console.log(state.uid)
     database.ref(`class-student/${state.uid}`)
         .update({
-          [key]: true
+          [value]: true
         })
-        .then(success => console.log(success)
+        .then(this.handleModalClose
         )
   }
 
@@ -224,7 +236,16 @@ class FullWidthTabs extends React.Component {
   }
 
   render() {
-    const { classModal, biglist, classlist, name, professor } = this.state;
+    const {
+      classModal,
+      AllclassModal,
+      biglist,
+      classlist,
+      name,
+      professor,
+      nameClassModal,
+      classID,
+    } = this.state;
     const { classes, theme, location } = this.props;
     const { state } = location
     console.log('dashboard', professor);
@@ -262,6 +283,7 @@ class FullWidthTabs extends React.Component {
             <AllClasses 
               listClass={classlist}
               handleSubscribeToClass={this.handleSubscribeToClass}
+              openModal={this.handleModalAllOpen}
             />
           </TabContainer>
           }
@@ -296,10 +318,13 @@ class FullWidthTabs extends React.Component {
           professor={professor}
         />
         <AllClassesModal
-          openModal={classModal}
+          openModal={AllclassModal}
           closeModal={this.handleModalClose}
           professorID={state.uid}
           name={name}
+          nameClassModal={nameClassModal}
+          classID={classID}
+          handleSubscribeToClass={this.handleSubscribeToClass}
         />
       </div>
       }

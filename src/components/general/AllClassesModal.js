@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
-import ClassForm from './ClassForm'
+import Button from '@material-ui/core/Button';
 
 function getModalStyle() {
   const top = 50;
@@ -28,14 +28,29 @@ const styles = theme => ({
   formStyle: {
     display: 'flex',
     justifyContent: 'center',
-  }
+  },
+  button: {
+    margin: theme.spacing.unit,
+  },
+  name: {
+    fontSize: 30,
+    display: 'flex',
+    justifyContent: 'center',
+  },
 });
 
 class SimpleModal extends React.Component {
 
   render() {
-    const { classes, openModal, closeModal, professorID, name } = this.props;
-
+    const {
+      classes,
+      openModal,
+      closeModal,
+      nameClassModal,
+      handleSubscribeToClass,
+      classID,
+    } = this.props;
+    
     return (
       <div>
         <Modal
@@ -48,16 +63,22 @@ class SimpleModal extends React.Component {
           <div>
             <div>
               <Typography variant="h6" id="modal-title" className={classes.formStyle}>
-                CREAR NUEVA CLASE
+                Confirmar subscripción 
+              </Typography>
+              <Typography variant="h6" id="modal-title" className={classes.name}>
+                {nameClassModal}
               </Typography>
             </div>
           </div>
             <Typography variant="subtitle1" id="simple-modal-description" className={classes.formStyle}>
-              <ClassForm 
-                closeModal={closeModal}
-                professorID={professorID}
-                name={name}
-              />
+            <Button variant="contained" color="secondary" className={classes.button} 
+              onClick={() => handleSubscribeToClass(classID)}
+            >
+              confirmar
+            </Button>
+            <Button variant="contained" color="primary" className={classes.button}>
+              Salir
+            </Button>
             </Typography>
           </div>
         </Modal>

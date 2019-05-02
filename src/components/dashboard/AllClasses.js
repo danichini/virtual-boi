@@ -162,7 +162,7 @@ const WrappedVirtualizedTable = withStyles(styles)(MuiVirtualizedTable);
 
 function AllClasses(props) {
   
-  const { listClass, handleSubscribeToClass } = props
+  const { listClass, handleSubscribeToClass, openModal } = props
 
   const data = listClass
 
@@ -190,7 +190,7 @@ function AllClasses(props) {
       <WrappedVirtualizedTable
         rowCount={rows.length}
         rowGetter={({ index }) => rows[index]}
-        onRowClick={event => handleSubscribeToClass(event)
+        onRowClick={event => openModal(event)
         }
         columns={[
           {
