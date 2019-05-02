@@ -155,7 +155,11 @@ class FullWidthTabs extends React.Component {
             onChangeIndex={this.handleChangeIndex}
             >
             <TabContainer dir={theme.direction}>
-              <Resources biglist={biglist} />
+              <Resources 
+                biglist={biglist}
+                professor={state.professor}
+                classID={state.navValue.classID}
+              />
             </TabContainer>
             <TabContainer dir={theme.direction}>Item Two</TabContainer>
             <TabContainer dir={theme.direction}>Item Three</TabContainer>

@@ -138,6 +138,9 @@ export default withFormik({
         ).then(success => {
           const key = success.key
           console.log('key', key)
+          database.ref(`Resources/${key}`).update({
+            resourceID: key
+          })
           database.ref(`class-resources/${values.classID}`)
           .update({[key]: true})
           .then(values.closeModal

@@ -13,6 +13,7 @@ import word from '../../utils/word.png'
 import ppoint from '../../utils/ppoint.png'
 import ssheet from '../../utils/ssheet.png'
 import unknown from '../../utils/unknown.png'
+import { database } from '../../store/Firebase'
 
 const styles = {
   card: {
@@ -29,8 +30,17 @@ const styles = {
   },
 };
 
+const handleDeleteResource = (value, classID) => {
+  database.ref(`Resources/${value}`).remove()
+  database.ref(`class-resources/${classID}/${value}`).remove()
+}
+
 function ImgMediaCard (props) {
-  const { classes, biglist } = props;
+  const { classes, biglist, professor, classID } = props;
+  
+  console.log(biglist);
+  
+
   const resources = biglist.map((value) =>
   <Card className={classes.card}>
   <CardActionArea>
@@ -40,11 +50,11 @@ function ImgMediaCard (props) {
       className={classes.media}
       height="160"
       image={
-        (value[2].split('/').pop() === 'jpeg' || value[2].split('/').pop() === 'png') ? value[3]
-        : value[2].split('/').pop() === 'pdf' ? pdf
-        : value[2].split('.').pop() === 'document' ? word
-        : value[2].split('.').pop() === 'presentation' ? ppoint
-        : value[2].split('.').pop() === 'sheet' ? ssheet
+        (value[3].split('/').pop() === 'jpeg' || value[3].split('/').pop() === 'png') ? value[4]
+        : value[3].split('/').pop() === 'pdf' ? pdf
+        : value[3].split('.').pop() === 'document' ? word
+        : value[3].split('.').pop() === 'presentation' ? ppoint
+        : value[3].split('.').pop() === 'sheet' ? ssheet
         : unknown
       }
       title={value[1]}
@@ -60,11 +70,21 @@ function ImgMediaCard (props) {
   </CardActionArea>
   <CardActions>
     
-    <a href={value[3]} download>
+    <a href={value[4]} download>
       <Button size="small" color="primary" >
         Descargar
       </Button>
     </a>
+    {
+      professor ? (<Button size="small" color="primary" 
+        onClick={() => handleDeleteResource(value[2] , classID)}
+      >
+          Eliminar
+      </Button>) : (
+        <div></div>
+      )
+    }
+      
   </CardActions>
   </Card>
   );
