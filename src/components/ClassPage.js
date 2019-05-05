@@ -81,7 +81,6 @@ class FullWidthTabs extends React.Component {
         snapshot.forEach((childSnapshot) => {
           const publicacion = childSnapshot.val();
           classes.push(publicacion);
-          
         })
           bigglit.push(classes)
           this.setState({biglist: bigglit})

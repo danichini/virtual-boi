@@ -74,17 +74,11 @@ handleChatRequest = () => {
   .then(snapshot => {
     const classes = []
     snapshot.forEach((childSnapshot) => {
-      childSnapshot.forEach((messageProps) => 
-        {
-          console.log('dafuck', messageProps.val());
-          const messageArray = messageProps.val()
-          classes.push(messageArray)
-        }
-      )
-      bigglit.push(classes)
-      this.setState({biglist: bigglit})
+      console.log(childSnapshot.child("message").val())
+      const publicacion = [childSnapshot.child("name").val(), childSnapshot.child("message").val()]
+      classes.push(publicacion);
     })
-    bigglit = [];
+    this.setState({biglist: classes})
   })
 }
 
@@ -98,6 +92,8 @@ handleSend = (message) => {
 
   const { name, classID } = this.props
 
+  console.log(message);
+  
   this.setState({
     message: '',
   });
@@ -113,16 +109,19 @@ handleSend = (message) => {
     const { chatLog, message, biglist } = this.state
     const { classes } = this.props;
 
+    // console.log('LiveChat', biglist);
+    
+
     const chatHistory = biglist.map((value, i) => 
     <ListItem alignItems="flex-start" className={classes.texto} key={i}>
       <Avatar aria-label="Recipe" className={classes.avatar}>
-        {value[1].charAt(0)}
+        {value[0].charAt(0)}
       </Avatar>
       <ListItemText
-        primary={value[1]}
+        primary={value[0]}
         secondary={
           <React.Fragment>
-            {value[0]}
+            {value[1]}
           </React.Fragment>
         }
       />
