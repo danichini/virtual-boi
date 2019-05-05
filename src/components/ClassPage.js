@@ -161,7 +161,9 @@ class FullWidthTabs extends React.Component {
                 classID={state.navValue.classID}
               />
             </TabContainer>
-            <TabContainer dir={theme.direction}>Item Two</TabContainer>
+            <TabContainer dir={theme.direction}>
+              <LiveChat />
+            </TabContainer>
             <TabContainer dir={theme.direction}>Item Three</TabContainer>
           </SwipeableViews>
         </div>
