@@ -1,11 +1,13 @@
 import React from 'react';
 import { withFormik, Field, ErrorMessage, Form } from 'formik';
 import { authentication } from '../../store/Firebase'
+import { styles } from 'ansi-colors';
 
 function LoginForm(props) {
     const {
         isSubmitting,
         isValid,
+        noValid
     } = props;
 
     return (
@@ -30,10 +32,15 @@ function LoginForm(props) {
                 <button
                     type="submit"
                     className={`submit ${isSubmitting || !isValid ? 'disabled' : ''}`}
-                    disabled={isSubmitting || !isValid}
                 >
                     Submit
                 </button>
+            </div>
+            <div style={{ color: 'red', textAlign: 'center' }} >
+            {
+                noValid ? ('Credenciales no concuerdan')
+                : ''
+            }
             </div>
         </Form>
     );
@@ -42,10 +49,11 @@ function LoginForm(props) {
 export default withFormik({
     mapPropsToValues(props) {
 
-        const { navigateDashboard } = props
+        const { navigateDashboard, handleLoading } = props
 
 
         return {
+            handleLoading,
             navigateDashboard,
             email: '',
             password: '',
@@ -78,6 +86,7 @@ export default withFormik({
         console.log(values);
         authentication.signInWithEmailAndPassword(values.email, values.password)
         .then(success => (console.log('success', success))
+        ).catch(values.handleLoading
         )
     },
 })(LoginForm);

@@ -27,14 +27,14 @@ const styles = theme => ({
   },
   formStyle: {
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
   }
 });
 
 class SimpleModal extends React.Component {
 
   render() {
-    const { classes, openModal, closeModal, navigateDashboard } = this.props;
+    const { classes, openModal, closeModal, navigateDashboard, noValid, handleLoading } = this.props;
 
     return (
       <div>
@@ -53,7 +53,7 @@ class SimpleModal extends React.Component {
             </div>
           </div>
             <Typography variant="subtitle1" id="simple-modal-description" className={classes.formStyle}>
-              <LoginForm navigateDashboard={navigateDashboard} />
+              <LoginForm navigateDashboard={navigateDashboard} noValid={noValid} handleLoading={handleLoading} />
             </Typography>
           </div>
         </Modal>

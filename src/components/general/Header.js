@@ -42,11 +42,16 @@ class Header extends React.Component {
     anchorEl: null,
     loginModal: false,
     signupModal: false,
+    noValid: false,
   };
 
   handleChange = event => {
     this.setState({ auth: event.target.checked });
   };
+
+  handleLoading = () => {
+    this.setState({ noValid: true })
+  }
 
   handleMenu = event => {
     this.setState({ anchorEl: event.currentTarget});
@@ -61,7 +66,7 @@ class Header extends React.Component {
   }
 
   handleModalClose = (value) => {
-    this.setState({ [value]: false })
+    this.setState({ [value]: false, noValid: false })
   }
 
   handleSignout = () => {
@@ -70,7 +75,7 @@ class Header extends React.Component {
     
   }
   render() {
-    const { anchorEl, loginModal, signupModal } = this.state;
+    const { anchorEl, loginModal, signupModal, noValid } = this.state;
     const { classes, loggedUser, signout, navigateDashboard, name } = this.props;
 
     const open = Boolean(anchorEl);
@@ -119,8 +124,15 @@ class Header extends React.Component {
                 openModal={loginModal}
                 closeModal={this.handleModalClose}
                 navigateDashboard={navigateDashboard}
+                noValid={noValid}
+                handleLoading={this.handleLoading}
               />
-              <SignupModal openModal={signupModal} closeModal={this.handleModalClose}/>
+              <SignupModal
+                openModal={signupModal}
+                closeModal={this.handleModalClose}
+                noValid={noValid}
+                handleLoading={this.handleLoading}
+              />
                 <Button 
                   variant="contained" 
                   color="secondary" 
