@@ -50,12 +50,42 @@ const styles = theme => ({
   },
 });
 
+let bigglit = []
+
 class LiveChat extends Component {
 
   
 state = {
   chatLog: [['Daniel','holi'],['Luis','papu']],
   message: '',
+  biglist: [],
+}
+
+componentWillMount() {
+  this.handleChatRequest()
+}
+
+handleChatRequest = () => {
+  
+  const { classID } = this.props
+  
+  database.ref(`class-chat/${classID}`)
+  .once('value')
+  .then(snapshot => {
+    const classes = []
+    snapshot.forEach((childSnapshot) => {
+      childSnapshot.forEach((messageProps) => 
+        {
+          console.log('dafuck', messageProps.val());
+          const messageArray = messageProps.val()
+          classes.push(messageArray)
+        }
+      )
+      bigglit.push(classes)
+      this.setState({biglist: bigglit})
+    })
+    bigglit = [];
+  })
 }
 
 handleChange = message => event => {
@@ -64,31 +94,35 @@ handleChange = message => event => {
   });
 };
 
-handleSend = (value) => {
-  console.log(value)
+handleSend = (message) => {
+
+  const { name, classID } = this.props
+
   this.setState({
     message: '',
   });
-  // database.ref
+  database.ref(`class-chat/${classID}`).push({
+    name,
+    message
+  })
+  this.handleChatRequest()
 }
 
   render() {
 
-    const { chatLog, message } = this.state
+    const { chatLog, message, biglist } = this.state
     const { classes } = this.props;
 
-    console.log(chatLog)
-
-    const chatHistory = chatLog.map((value) => 
-    <ListItem alignItems="flex-end" className={classes.texto}>
+    const chatHistory = biglist.map((value, i) => 
+    <ListItem alignItems="flex-start" className={classes.texto} key={i}>
       <Avatar aria-label="Recipe" className={classes.avatar}>
-        {value[0].charAt(0)}
+        {value[1].charAt(0)}
       </Avatar>
       <ListItemText
-        primary={value[0]}
+        primary={value[1]}
         secondary={
           <React.Fragment>
-            {value[1]}
+            {value[0]}
           </React.Fragment>
         }
       />

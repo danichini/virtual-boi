@@ -41,8 +41,8 @@ function ImgMediaCard (props) {
   console.log(biglist);
   
 
-  const resources = biglist.map((value) =>
-  <Card className={classes.card}>
+  const resources = biglist.map((value, i) =>
+  <Card className={classes.card} key={i}>
   <CardActionArea>
     <CardMedia
       component="img"

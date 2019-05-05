@@ -63,12 +63,12 @@ class FullWidthTabs extends React.Component {
 
   componentWillMount() {
     this.handleDatabaseRequest()
+    // this.handleChatRequest()
   }
 
   handleDatabaseRequest = () => {
     const { location } = this.props
     const { state } = location
-    console.log('location', state);
     database.ref(`class-resources/${state.navValue.classID}`)
     .once('value')
     .then(snapshot =>{
@@ -89,6 +89,17 @@ class FullWidthTabs extends React.Component {
     })
     bigglit = [];
   })
+  }
+
+  handleChatRequest = () => {
+  
+    const { location } = this.props
+    const { state } = location
+    
+    database.ref(`class-chat/${state.navValue.classID}`)
+    .once('value')
+    .then(snapshot => console.log('snap', snapshot.key)
+    )
   }
 
   handleChange = (event, value) => {
@@ -162,7 +173,10 @@ class FullWidthTabs extends React.Component {
               />
             </TabContainer>
             <TabContainer dir={theme.direction}>
-              <LiveChat />
+              <LiveChat
+                classID={state.navValue.classID}
+                name={state.name}
+              />
             </TabContainer>
             <TabContainer dir={theme.direction}>Item Three</TabContainer>
           </SwipeableViews>
