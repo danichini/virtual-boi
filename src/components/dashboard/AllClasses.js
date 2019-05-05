@@ -162,7 +162,7 @@ const WrappedVirtualizedTable = withStyles(styles)(MuiVirtualizedTable);
 
 function AllClasses(props) {
   
-  const { listClass, handleSubscribeToClass, openModal } = props
+  const { listClass, openModal } = props
 
   const data = listClass
 

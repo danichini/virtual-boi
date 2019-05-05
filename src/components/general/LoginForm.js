@@ -1,7 +1,6 @@
 import React from 'react';
 import { withFormik, Field, ErrorMessage, Form } from 'formik';
 import { authentication } from '../../store/Firebase'
-import { styles } from 'ansi-colors';
 
 function LoginForm(props) {
     const {

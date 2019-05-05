@@ -59,9 +59,7 @@ componentWillMount() {
 }
 
 handleChatRequest = () => {
-  
-  const { classID } = this.props
-  
+    
   database.ref(`Dashboard`)
   .once('value')
   .then(snapshot => {

@@ -69,9 +69,6 @@ class Header extends React.Component {
     this.setState({ [value]: false, noValid: false })
   }
 
-  handleSignout = () => {
-    const {loggedUser} = this.props
-  }
   render() {
     const { anchorEl, loginModal, signupModal, noValid } = this.state;
     const { classes, loggedUser, signout, navigateDashboard, name } = this.props;

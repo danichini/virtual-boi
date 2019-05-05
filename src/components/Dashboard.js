@@ -95,7 +95,7 @@ class FullWidthTabs extends React.Component {
     const { location } = this.props
     const { state } = location
 
-    if (value) {
+    
         database.ref(`class-professor/${state.uid}`)
       .once('value')
       .then(snapshot =>{
@@ -116,10 +116,10 @@ class FullWidthTabs extends React.Component {
       })
       bigglit = [];
     })
-    } else {
+    
       this.handleAllClassTable()
       this.handleClassesStudentTable()
-    }
+    
   }
 
   handleAllClassTable = () => {
@@ -268,11 +268,8 @@ class FullWidthTabs extends React.Component {
             textColor="primary"
             variant="fullWidth"
             >
-            { professor ? 
-              (<Tab label="Feed" />)
-            : (<Tab label="Clases abiertas" />
-            )
-            }
+            <Tab label="Feed" />
+            <Tab label="Clases abiertas" />
           </Tabs>
         </AppBar>
         <SwipeableViews
@@ -280,19 +277,17 @@ class FullWidthTabs extends React.Component {
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
           >
-          {professor ? 
-              (<TabContainer dir={theme.direction}>
+          
+              <TabContainer dir={theme.direction}>
                 <Feed />
-              </TabContainer>)
-            : (<TabContainer dir={theme.direction}>
+              </TabContainer>
+            <TabContainer dir={theme.direction}>
             <AllClasses 
               listClass={classlist}
               handleSubscribeToClass={this.handleSubscribeToClass}
               openModal={this.handleModalAllOpen}
             />
-          </TabContainer>)
-          }
-          
+          </TabContainer>
           
         </SwipeableViews>
       </div>
