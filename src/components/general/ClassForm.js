@@ -160,7 +160,6 @@ export default withFormik({
 
   handleSubmit(values, formikBag) {
       formikBag.setSubmitting(false);
-      console.log(values);
       database.ref(`Classes/`).push({
           className: values.className,
           professor: values.name,
@@ -171,7 +170,6 @@ export default withFormik({
           maxStudents: values.maxStudents,
       }).then(success => {
         const key = success.key
-        console.log('key', key)
         database.ref(`Classes/${key}`).update({
           classID: key
         })

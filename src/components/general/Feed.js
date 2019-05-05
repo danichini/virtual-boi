@@ -1,13 +1,9 @@
 import React, { Component } from 'react'
-import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import { database } from '../../store/Firebase';
 
 const styles = theme => ({
@@ -74,7 +70,6 @@ handleChatRequest = () => {
       const publicacion = [childSnapshot.child("professor").val(), childSnapshot.child("className").val()]
       classes.push(publicacion);
     })
-    console.log(classes);
     
     this.setState({biglist: classes})
   })
@@ -84,8 +79,6 @@ handleChatRequest = () => {
 
     const { biglist } = this.state
     const { classes } = this.props;
-    
-    // console.log('Feed', biglist);
     
 
     const chatHistory = biglist.map((value, i) => 

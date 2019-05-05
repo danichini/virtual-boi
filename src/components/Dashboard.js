@@ -189,7 +189,6 @@ class FullWidthTabs extends React.Component {
 
   handleModalAllOpen = (value) => {
     const { rowData } = value
-    console.log(rowData);
     this.setState({ 
       AllclassModal: true,
       nameClassModal: rowData.className,
@@ -249,7 +248,7 @@ class FullWidthTabs extends React.Component {
     } = this.state;
     const { classes, theme, location } = this.props;
     const { state } = location
-    console.log('dashboard', professor);
+
     
     return (
       <div>

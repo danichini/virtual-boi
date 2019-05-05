@@ -63,7 +63,6 @@ class FullWidthTabs extends React.Component {
 
   componentWillMount() {
     this.handleDatabaseRequest()
-    // this.handleChatRequest()
   }
 
   handleDatabaseRequest = () => {
@@ -88,17 +87,6 @@ class FullWidthTabs extends React.Component {
     })
     bigglit = [];
   })
-  }
-
-  handleChatRequest = () => {
-  
-    const { location } = this.props
-    const { state } = location
-    
-    database.ref(`class-chat/${state.navValue.classID}`)
-    .once('value')
-    .then(snapshot => console.log('snap', snapshot.key)
-    )
   }
 
   handleChange = (event, value) => {
@@ -133,8 +121,6 @@ class FullWidthTabs extends React.Component {
     const { resourcesModal, biglist } = this.state
     const { classes, theme, location } = this.props;
     const { state } = location
-
-    console.log('location', state);
     
     return (
       <div>

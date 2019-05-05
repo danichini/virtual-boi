@@ -66,7 +66,6 @@ class Frontpage extends Component {
 
   handleNavigationDashboard = (value) => {
     const { uid } = value
-    console.log(uid);
     
     const { history } = this.props
     history.push('./dashboard', { uid })

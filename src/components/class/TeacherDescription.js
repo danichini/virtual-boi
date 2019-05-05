@@ -58,10 +58,7 @@ class RecipeReviewCard extends React.Component {
 
   render() {
     const { classes, teacherDes } = this.props;
-
-    console.log('TDesc', teacherDes);
     
-
     return (
       <Card className={classes.card}>
         <CardHeader

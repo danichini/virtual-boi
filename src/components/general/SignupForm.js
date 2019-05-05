@@ -114,7 +114,6 @@ export default withFormik({
 
     handleSubmit(values, formikBag) {
         formikBag.setSubmitting(false);
-        console.log(values);
         authentication.createUserWithEmailAndPassword(values.email, values.password)
         .then((success) => 
         database.ref(`Users/${success.user.uid}`).set({

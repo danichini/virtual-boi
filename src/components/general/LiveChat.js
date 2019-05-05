@@ -88,8 +88,6 @@ handleSend = (message) => {
 
   const { name, classID } = this.props
 
-  console.log(message);
-  
   this.setState({
     message: '',
   });
@@ -104,9 +102,6 @@ handleSend = (message) => {
 
     const { message, biglist } = this.state
     const { classes } = this.props;
-
-    // console.log('LiveChat', biglist);
-    
 
     const chatHistory = biglist.map((value, i) => 
     <ListItem alignItems="flex-start" className={classes.texto} key={i}>

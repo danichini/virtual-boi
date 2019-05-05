@@ -83,7 +83,6 @@ export default withFormik({
 
     handleSubmit(values, formikBag) {
         formikBag.setSubmitting(false);
-        console.log(values);
         authentication.signInWithEmailAndPassword(values.email, values.password)
         .then(success => (console.log('success', success))
         ).catch(values.handleLoading

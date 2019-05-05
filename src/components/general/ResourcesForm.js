@@ -13,7 +13,6 @@ function ResourcesForm(props) {
   } = props;
 
   const handleFile = (value) => {
-    console.log(value[0])
     values.file = value[0]
   } 
 
@@ -107,8 +106,6 @@ export default withFormik({
         errors.file = 'seleccione archivo a subir'
       } 
 
-      console.log(values);
-
       if (Object.keys(errors).length) {
           throw errors;
       }
@@ -137,7 +134,6 @@ export default withFormik({
           })
         ).then(success => {
           const key = success.key
-          console.log('key', key)
           database.ref(`Resources/${key}`).update({
             resourceID: key
           })

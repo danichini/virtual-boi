@@ -37,9 +37,6 @@ const handleDeleteResource = (value, classID) => {
 
 function ImgMediaCard (props) {
   const { classes, biglist, professor, classID } = props;
-  
-  console.log(biglist);
-  
 
   const resources = biglist.map((value, i) =>
   <Card className={classes.card} key={i}>
