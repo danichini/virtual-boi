@@ -155,7 +155,6 @@ class FullWidthTabs extends React.Component {
               variant="fullWidth"
               >
               <Tab label="Contenido" />
-              <Tab label="Cronograma" />
               <Tab label="Discusion" />
             </Tabs>
           </AppBar>
@@ -177,7 +176,6 @@ class FullWidthTabs extends React.Component {
                 name={state.name}
               />
             </TabContainer>
-            <TabContainer dir={theme.direction}>Item Three</TabContainer>
           </SwipeableViews>
         </div>
         

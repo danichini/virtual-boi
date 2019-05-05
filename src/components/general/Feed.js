@@ -51,7 +51,7 @@ const styles = theme => ({
   },
 });
 
-class LiveChat extends Component {
+class Feed extends Component {
 
 state = {
   message: '',
@@ -66,46 +66,26 @@ handleChatRequest = () => {
   
   const { classID } = this.props
   
-  database.ref(`class-chat/${classID}`)
+  database.ref(`Dashboard`)
   .once('value')
   .then(snapshot => {
     const classes = []
     snapshot.forEach((childSnapshot) => {
-      const publicacion = [childSnapshot.child("name").val(), childSnapshot.child("message").val()]
+      const publicacion = [childSnapshot.child("professor").val(), childSnapshot.child("className").val()]
       classes.push(publicacion);
     })
+    console.log(classes);
+    
     this.setState({biglist: classes})
   })
 }
 
-handleChange = message => event => {
-  this.setState({
-    [message]: event.target.value,
-  });
-};
-
-handleSend = (message) => {
-
-  const { name, classID } = this.props
-
-  console.log(message);
-  
-  this.setState({
-    message: '',
-  });
-  database.ref(`class-chat/${classID}`).push({
-    name,
-    message
-  })
-  this.handleChatRequest()
-}
-
   render() {
 
-    const { message, biglist } = this.state
+    const { biglist } = this.state
     const { classes } = this.props;
-
-    // console.log('LiveChat', biglist);
+    
+    // console.log('Feed', biglist);
     
 
     const chatHistory = biglist.map((value, i) => 
@@ -114,7 +94,7 @@ handleSend = (message) => {
         {value[0].charAt(0)}
       </Avatar>
       <ListItemText
-        primary={value[0]}
+        primary={`${value[0]} ha creado la clase`}
         secondary={
           <React.Fragment>
             {value[1]}
@@ -133,32 +113,9 @@ handleSend = (message) => {
           {chatHistory}
         </List>
         </div>
-        <div 
-          className={classes.divText}
-        >
-
-        <TextField
-          id="outlined-name"
-          label='enviar mensaje'
-          className={classes.textField}
-          value={message}
-          onChange={this.handleChange('message')}
-          margin="normal"
-          variant="outlined"
-        />
-        <Button 
-          variant="contained" 
-          color="secondary" 
-          className={classes.button}
-          onClick={() => this.handleSend(message)}
-        >
-          send
-        </Button>
-
-        </div>
       </div>
     )
   }
 }
 
-export default withStyles(styles)(LiveChat);
+export default withStyles(styles)(Feed);

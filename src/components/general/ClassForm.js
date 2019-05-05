@@ -181,5 +181,9 @@ export default withFormik({
         )
       }
     )
+    database.ref(`Dashboard/`).push({
+      professor: values.name,
+      className: values.className,
+    })
   },
 })(SignupForm);

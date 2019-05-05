@@ -27,7 +27,7 @@ const styles = theme => ({
   },
   formStyle: {
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
   }
 });
 

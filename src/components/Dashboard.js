@@ -13,6 +13,7 @@ import ClassModal from './general/ClassModal'
 import AllClassesModal from './general/AllClassesModal'
 import { database, authentication } from '../store/Firebase'
 import AllClasses from './dashboard/AllClasses'
+import Feed from './general/Feed'
 
 function TabContainer({ children, dir }) {
   return (
@@ -268,8 +269,10 @@ class FullWidthTabs extends React.Component {
             textColor="primary"
             variant="fullWidth"
             >
-            { professor ? (<Tab label="Item One" />)
-            : (<Tab label="Item Two" />)
+            { professor ? 
+              (<Tab label="Feed" />)
+            : (<Tab label="Clases abiertas" />
+            )
             }
           </Tabs>
         </AppBar>
@@ -278,14 +281,17 @@ class FullWidthTabs extends React.Component {
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
           >
-          {professor ? (<TabContainer dir={theme.direction}>Item Ones</TabContainer>)
-            : <TabContainer dir={theme.direction}>
+          {professor ? 
+              (<TabContainer dir={theme.direction}>
+                <Feed />
+              </TabContainer>)
+            : (<TabContainer dir={theme.direction}>
             <AllClasses 
               listClass={classlist}
               handleSubscribeToClass={this.handleSubscribeToClass}
               openModal={this.handleModalAllOpen}
             />
-          </TabContainer>
+          </TabContainer>)
           }
           
           
