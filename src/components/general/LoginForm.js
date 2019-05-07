@@ -20,7 +20,7 @@ function LoginForm(props) {
             </div>
 
             <div className="row">
-                Password:
+                Contraseña:
                 <Field name="password" type="password" className="input" />
                 <ErrorMessage name="password">
                     {message => <div className="error">{message}</div>}
@@ -32,7 +32,7 @@ function LoginForm(props) {
                     type="submit"
                     className={`submit ${isSubmitting || !isValid ? 'disabled' : ''}`}
                 >
-                    Submit
+                    Enviar
                 </button>
             </div>
             <div style={{ color: 'red', textAlign: 'center' }} >

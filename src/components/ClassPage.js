@@ -101,6 +101,11 @@ class FullWidthTabs extends React.Component {
     this.setState({ resourcesModal: true });
   }
 
+  handleRefesh = () => {
+    this.setState({ biglist: [] })
+    this.handleDatabaseRequest()
+  }
+
   handleModalClose = (value) => {
     this.setState({ resourcesModal: false })
     this.setState({ biglist: [] })
@@ -154,6 +159,7 @@ class FullWidthTabs extends React.Component {
                 biglist={biglist}
                 professor={state.professor}
                 classID={state.navValue.classID}
+                refresh={this.handleRefesh}
               />
             </TabContainer>
             <TabContainer dir={theme.direction}>

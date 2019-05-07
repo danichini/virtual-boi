@@ -85,6 +85,7 @@ class Header extends React.Component {
             <Typography variant="h6" color="inherit" className={classes.grow}>
               VirtualBoi
             </Typography>
+            
             {loggedUser ? (
               <div className={classes.fontSize} >
                 {name}

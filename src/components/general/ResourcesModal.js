@@ -48,7 +48,7 @@ class SimpleModal extends React.Component {
           <div>
             <div>
               <Typography variant="h6" id="modal-title" className={classes.formStyle}>
-                Signup Modal
+                Subir Archivo
               </Typography>
             </div>
           </div>

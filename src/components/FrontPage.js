@@ -3,8 +3,6 @@ import Header from './general/Header'
 import { authentication } from '../store/Firebase'
 import { withRouter} from 'react-router-dom'
 import fp from '../utils/fp.png'
-// import LoginModal from './general/LoginModal';
-
 
 const styles = {
   container: {
@@ -66,8 +64,8 @@ class Frontpage extends Component {
 
   handleNavigationDashboard = (value) => {
     const { uid } = value
-    
     const { history } = this.props
+    
     history.push('./dashboard', { uid })
   }
 

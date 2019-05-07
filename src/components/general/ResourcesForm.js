@@ -109,8 +109,6 @@ export default withFormik({
       if (Object.keys(errors).length) {
           throw errors;
       }
-
-      
   },
 
   handleSubmit(values, formikBag) {

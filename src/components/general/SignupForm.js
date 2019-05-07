@@ -2,6 +2,12 @@ import React from 'react';
 import { withFormik, Field, ErrorMessage, Form } from 'formik';
 import { database, authentication } from '../../store/Firebase'
 
+const styles = {
+    check: {
+        color: 'red'
+    },
+}
+
 function SignupForm(props) {
 
     const {
@@ -12,11 +18,11 @@ function SignupForm(props) {
     return (
         <Form>
             <div className="row">
-                Name:<Field name="name" type="text" className="input" />
+                Nombre:<Field name="name" type="text" className="input" />
                 <ErrorMessage name="name">
                     {message => <div className="error">{message}</div>}
                 </ErrorMessage>
-                Lastname:<Field name="last" type="text" className="input" />
+                Apellido:<Field name="last" type="text" className="input" />
                 <ErrorMessage name="last">
                     {message => <div className="error">{message}</div>}
                 </ErrorMessage>
@@ -30,7 +36,7 @@ function SignupForm(props) {
             </div>
 
             <div className="row">
-                Password:
+                Contraseña:
                 <Field name="password" type="password" className="input" />
                 <ErrorMessage name="password">
                     {message => <div className="error">{message}</div>}
@@ -38,7 +44,7 @@ function SignupForm(props) {
             </div>
 
             <div className="row">
-                Confirme Password:
+                Confirme Contraseña:
                 <Field name="cpassword" type="password" className="input" />
                 <ErrorMessage name="cpassword">
                     {message => <div className="error">{message}</div>}
@@ -46,20 +52,20 @@ function SignupForm(props) {
             </div>
 
             <div className="row">
+                registrarse como profesor
+                <Field name="teacher" type="checkbox"/>
+                <ErrorMessage name="teacher">
+                    {message => <div className="error">{message}</div>}
+                </ErrorMessage>
+            </div>
+            <div className="row">
                 <button
                     type="submit"
                     className={`submit ${isSubmitting || !isValid ? 'disabled' : ''}`}
                     disabled={isSubmitting || !isValid}
                 >
-                    Submit
+                    Enviar
                 </button>
-            </div>
-            <div className="row">
-                registrarse como profesor
-                <Field name="teacher" type="checkbox" className="input" />
-                <ErrorMessage name="teacher">
-                    {message => <div className="error">{message}</div>}
-                </ErrorMessage>
             </div>
             
         </Form>

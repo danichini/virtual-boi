@@ -30,13 +30,15 @@ const styles = {
   },
 };
 
-const handleDeleteResource = (value, classID) => {
+const handleDeleteResource = (value, classID, refresh) => {
+  
   database.ref(`Resources/${value}`).remove()
   database.ref(`class-resources/${classID}/${value}`).remove()
+  refresh()
 }
 
 function ImgMediaCard (props) {
-  const { classes, biglist, professor, classID } = props;
+  const { classes, biglist, professor, classID, refresh } = props;
 
   const resources = biglist.map((value, i) =>
   <Card className={classes.card} key={i}>
@@ -74,7 +76,7 @@ function ImgMediaCard (props) {
     </a>
     {
       professor ? (<Button size="small" color="primary" 
-        onClick={() => handleDeleteResource(value[2] , classID)}
+        onClick={() => handleDeleteResource(value[2] , classID, refresh)}
       >
           Eliminar
       </Button>) : (

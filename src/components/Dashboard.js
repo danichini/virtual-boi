@@ -63,6 +63,7 @@ class FullWidthTabs extends React.Component {
     AllclassModal: false,
     biglist: [],
     classlist: [],
+    chatlist: [],
     logged: false,
     name: '',
     professor: false,
@@ -71,6 +72,7 @@ class FullWidthTabs extends React.Component {
 
   componentWillMount() {
     this.getUsername()
+    this.handleChatRequest()
   }
 
   getUsername() {
@@ -140,7 +142,7 @@ class FullWidthTabs extends React.Component {
                 
               })
                 classlit.push(classes)
-                this.setState({classlist: classlit})
+                this.setState({classlist: classlit.reverse()})
             })
           }
         )
@@ -175,6 +177,20 @@ class FullWidthTabs extends React.Component {
     })
   }
 
+  handleChatRequest = () => {
+    database.ref(`Dashboard`)
+    .once('value')
+    .then(snapshot => {
+      const classes = []
+      snapshot.forEach((childSnapshot) => {
+        const publicacion = [childSnapshot.child("professor").val(), childSnapshot.child("className").val()]
+        classes.push(publicacion);
+      })
+      
+      this.setState({chatlist: classes.reverse()})
+    })
+  }
+
   handleChange = (event, value) => {
     this.setState({ value });
   };
@@ -201,7 +217,9 @@ class FullWidthTabs extends React.Component {
     this.setState({ AllclassModal: false })
     this.setState({ biglist: [] })
     this.setState({ classlist: [] })
+    this.setState({ chatlist: [] })
     this.handleDatabaseRequest()
+    this.handleChatRequest()
   }
 
   handleSignout = () => {
@@ -241,6 +259,7 @@ class FullWidthTabs extends React.Component {
       AllclassModal,
       biglist,
       classlist,
+      chatlist,
       name,
       professor,
       nameClassModal,
@@ -279,7 +298,7 @@ class FullWidthTabs extends React.Component {
           >
           
               <TabContainer dir={theme.direction}>
-                <Feed />
+                <Feed chatlist={chatlist}/>
               </TabContainer>
             <TabContainer dir={theme.direction}>
             <AllClasses 

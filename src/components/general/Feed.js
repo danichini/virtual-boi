@@ -4,7 +4,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
-import { database } from '../../store/Firebase';
+// import { database } from '../../store/Firebase';
 
 const styles = theme => ({
   container: {
@@ -54,32 +54,30 @@ state = {
   biglist: [],
 }
 
-componentWillMount() {
-  this.handleChatRequest()
-}
+// componentWillMount() {
+//   this.handleChatRequest()
+// }
 
-handleChatRequest = () => {
+// handleChatRequest = () => {
+//   database.ref(`Dashboard`)
+//   .once('value')
+//   .then(snapshot => {
+//     const classes = []
+//     snapshot.forEach((childSnapshot) => {
+//       const publicacion = [childSnapshot.child("professor").val(), childSnapshot.child("className").val()]
+//       classes.push(publicacion);
+//     })
     
-  database.ref(`Dashboard`)
-  .once('value')
-  .then(snapshot => {
-    const classes = []
-    snapshot.forEach((childSnapshot) => {
-      const publicacion = [childSnapshot.child("professor").val(), childSnapshot.child("className").val()]
-      classes.push(publicacion);
-    })
-    
-    this.setState({biglist: classes})
-  })
-}
+//     this.setState({biglist: classes.reverse()})
+//   })
+// }
 
   render() {
 
-    const { biglist } = this.state
-    const { classes } = this.props;
+    // const { biglist } = this.state
+    const { classes, chatlist } = this.props;
     
-
-    const chatHistory = biglist.map((value, i) => 
+    const chatHistory = chatlist.map((value, i) => 
     <ListItem alignItems="flex-start" className={classes.texto} key={i}>
       <Avatar aria-label="Recipe" className={classes.avatar}>
         {value[0].charAt(0)}
